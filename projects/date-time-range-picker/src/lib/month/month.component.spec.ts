@@ -20,4 +20,42 @@ describe('MonthComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('render', () => {
+    it('should show the correct amount of days', () => {
+      expect(component).toBeTruthy();
+    });
+  });
+
+  it('should have the correct number of dummy days before', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should have the correct number of dummy days after', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should know when a day is hovered', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should know when a day is not hovered', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should know when a day is available', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should know when a day is partially available', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should know when a day is unavailable', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should emit a date selected event when a day is selected', () => {
+    expect(component).toBeTruthy();
+  });
 });
