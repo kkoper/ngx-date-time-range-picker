@@ -2,6 +2,9 @@
   "name": "date-time-range-picker-app",
   "version": "0.0.0",
   "scripts": {
+    "build_lib": "ng build --prod date-time-range-picker",
+    "npm_pack": "cd dist/date-time-range-picker && npm pack",
+    "package": "npm run build_lib && npm run npm_pack",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
