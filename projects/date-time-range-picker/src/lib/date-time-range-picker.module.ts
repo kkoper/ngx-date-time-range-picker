@@ -3,9 +3,8 @@ import { DateTimeRangePickerComponent } from './date-time-range-picker.component
 import { DayComponent } from './day/day.component';
 
 @NgModule({
-  imports: [
-  ],
+  imports: [],
   declarations: [DateTimeRangePickerComponent, DayComponent],
-  exports: [DateTimeRangePickerComponent]
+  exports: [DateTimeRangePickerComponent, DayComponent]
 })
-export class DateTimeRangePickerModule { }
+export class DateTimeRangePickerModule {}

@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ngx-day',
   templateUrl: './day.component.html',
-  styleUrls: ['./day.component.css']
+  styleUrls: ['./day.component.scss']
 })
 export class DayComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
