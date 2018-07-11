@@ -7,4 +7,7 @@
 </div>
 <h2>Here are some links to help you start: </h2>
 <ngx-date-time-range-picker></ngx-date-time-range-picker>
-<ngx-day></ngx-day>
+<ngx-day [value]='21' [status]='dayStatuses.Free' [hovered]='false' (selectDay)='onDaySelected($event)' (hoverDay)='onDayHovered($event)'></ngx-day>
+<ngx-day [value]='22' [status]='dayStatuses.Full' [hovered]='false' (selectDay)='onDaySelected($event)' (hoverDay)='onDayHovered($event)'></ngx-day>
+<ngx-day [value]='23' [status]='dayStatuses.Partial' [hovered]='false' (selectDay)='onDaySelected($event)' (hoverDay)='onDayHovered($event)'></ngx-day>
+<ngx-day [value]='24' [status]='dayStatuses.Free' [hovered]='true' (selectDay)='onDaySelected($event)' (hoverDay)='onDayHovered($event)'></ngx-day>

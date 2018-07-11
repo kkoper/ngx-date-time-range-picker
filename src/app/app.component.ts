@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DayState } from 'date-time-range-picker';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  dayStatuses = DayState;
+
   title = 'app';
+
+  onDaySelected(day: number) {
+    console.log('day selected', day);
+  }
+
+  onDayHovered(day: number) {
+    console.log('day hovered', day);
+  }
 }
