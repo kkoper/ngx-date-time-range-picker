@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "date-time-range-picker": [
+        "dist/date-time-range-picker"
+      ],
+      "date-time-range-picker/*": [
+        "dist/date-time-range-picker/*"
+      ]
+    }
   }
 }
