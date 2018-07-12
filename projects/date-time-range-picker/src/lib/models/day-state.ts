@@ -1,5 +1,6 @@
 export enum DayState {
   Free,
   Full,
-  Partial
+  Partial,
+  Dummy
 }

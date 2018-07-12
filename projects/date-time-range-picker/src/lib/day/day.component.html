@@ -1,4 +1,4 @@
 <span class='day-block' [class.unavailable]='status === dayStates.Full' [class.available]='status === dayStates.Free' [class.partial]='status === dayStates.Partial'
   [class.hover]='hovered' (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" (click)='onDaySelected()'>
-  {{value}}
+  {{value || ' '}}
 </span>

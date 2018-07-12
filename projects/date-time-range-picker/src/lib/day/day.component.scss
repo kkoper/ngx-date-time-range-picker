@@ -1,15 +1,18 @@
 .day-block {
-    padding: 0.5rem;
+  display: inline-block;
+  padding: 0.5rem;
+  width: 1rem;
+  text-align: right;
 }
 
 .unavailable {
-    color: lightgrey;
+  color: lightgrey;
 }
 
 .partial {
-    color: lime;
+  color: lime;
 }
 
 .hover {
-    background: lightskyblue;
+  background: lightskyblue;
 }

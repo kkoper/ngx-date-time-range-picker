@@ -7,7 +7,7 @@ import { DayState } from '../models/day-state';
   styleUrls: ['./day.component.scss']
 })
 export class DayComponent implements OnInit {
-  @Input() value: number;
+  @Input() value?: number;
   @Input() status: DayState;
   @Input() hovered: boolean;
 
@@ -22,7 +22,7 @@ export class DayComponent implements OnInit {
 
   hoverIn(): void {
     this.hovered = true;
-    this.hoverDay.emit();
+    this.hoverDay.emit(this.value);
   }
 
   hoverOut(): void {
