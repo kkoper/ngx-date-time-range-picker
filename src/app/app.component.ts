@@ -15,7 +15,7 @@ export class AppComponent {
     // { start: new Date(2018, 6, 14, 10, 0), end: new Date(2018, 6, 14, 21, 0) },
     // { start: new Date(2018, 6, 16, 10, 0), end: new Date(2018, 6, 18, 18, 0) },
     // { start: new Date(2018, 6, 18, 10, 0), end: new Date(2018, 6, 21, 21, 0) },
-    { start: new Date(2018, 6, 28, 10, 0), end: new Date(2018, 6, 29, 21, 0) }
+    { start: new Date(2018, 6, 26, 10, 0), end: new Date(2018, 6, 29, 21, 0) }
   ];
   hoverFrom = new Date(2018, 6, 17);
 

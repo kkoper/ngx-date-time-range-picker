@@ -35,7 +35,7 @@ export class MonthComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.assessAvailability();
+    this.assessAvailabilityPerDay();
 
     const dateToUse = moment()
       .year(this.year)
@@ -89,17 +89,18 @@ export class MonthComponent implements OnInit {
     }
   }
 
-  private assessAvailability(): void {
+  private assessAvailabilityPerDay(): void {
     this.makeAllDaysOfTheMonthFree();
 
-    if (!this.isCurrentDateInFutureMonth()) {
+    if (this.isCurrentDateInFutureMonth()) {
+      this.makeAllDaysOfTheMonthFull();
+    } else {
       this.calculateDayAvailabilities();
+      this.makeDaysInThePastUnavailable();
+      this.makeDaysBeforePreselectionUnavailable();
+
+      this.synchronizeLists();
     }
-
-    this.makeDaysInThePastUnavailable();
-    this.makeDaysBeforePreselectionUnavailable();
-
-    this.synchronizeLists();
   }
 
   private synchronizeLists() {
@@ -118,13 +119,13 @@ export class MonthComponent implements OnInit {
   private calculateDayAvailabilities() {
     let previousEndDate: moment_.Moment;
     for (const block of this.unavailability) {
-      const startFreeDayNumber = previousEndDate ? previousEndDate.date() : 0;
+      const startFreeDayNumber = previousEndDate ? previousEndDate.date() : 1;
       const endFreeDayNumber = moment(block.start).date();
       const startFullDayNumber = moment(block.start).date();
       const endFullDayNumber = moment(block.end).date();
 
-      this.addFreeDays(startFreeDayNumber + 1, endFreeDayNumber);
-      this.partialDays.push(endFreeDayNumber);
+      this.addFreeDays(startFreeDayNumber, endFreeDayNumber);
+      this.partialDays.push(startFullDayNumber);
       this.partialDays.push(endFullDayNumber);
       this.addFullDays(startFullDayNumber + 1, endFullDayNumber);
       previousEndDate = moment(block.end);
@@ -134,6 +135,13 @@ export class MonthComponent implements OnInit {
         break;
       }
     }
+  }
+
+  private markRestOfTheDaysAsFull(block: DateTimeRange, start: number) {
+    const endOfMonthDay = moment(block.end)
+      .endOf('month')
+      .date();
+    this.addFullDays(start, endOfMonthDay + 1);
   }
 
   private addFullDays(start: number, end: number) {
@@ -146,13 +154,6 @@ export class MonthComponent implements OnInit {
     for (let i = start; i < end; i++) {
       this.freeDays.push(i);
     }
-  }
-
-  private markRestOfTheDaysAsFull(block: DateTimeRange, start: number) {
-    const endOfMonthDay = moment(block.end)
-      .endOf('month')
-      .date();
-    this.addFullDays(start, endOfMonthDay + 1);
   }
 
   private makeDaysBeforePreselectionUnavailable() {
@@ -170,21 +171,16 @@ export class MonthComponent implements OnInit {
       const currentDay = moment().date();
       this.addFullDays(1, currentDay);
       this.partialDays.push(currentDay);
-    } else if (this.isCurrentDateInFutureMonth()) {
-      const endDay = moment()
-        .endOf('month')
-        .date();
-      this.addFullDays(1, endDay);
     }
   }
 
   private isCurrentDateInFutureMonth() {
     return (
-      moment().toDate() >
+      moment() >
       moment()
         .year(this.year)
         .month(this.month)
-        .toDate()
+        .endOf('month')
     );
   }
 
@@ -199,13 +195,23 @@ export class MonthComponent implements OnInit {
   }
 
   private makeAllDaysOfTheMonthFree() {
-    const start = 0;
+    const start = 1;
     const end = moment()
       .year(this.year)
       .month(this.month)
       .endOf('month')
       .date();
-    this.addFreeDays(start + 1, end + 1);
+    this.addFreeDays(start, end + 1);
+  }
+
+  private makeAllDaysOfTheMonthFull() {
+    const start = 1;
+    const end = moment()
+      .year(this.year)
+      .month(this.month)
+      .endOf('month')
+      .date();
+    this.addFullDays(start, end + 1);
   }
 
   private fillDaysBefore(date: moment_.Moment): void {
