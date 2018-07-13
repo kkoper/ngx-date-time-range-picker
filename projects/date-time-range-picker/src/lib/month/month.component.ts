@@ -52,7 +52,7 @@ export class MonthComponent implements OnInit {
       if (startDate < dateHovered) {
         let dayToHoverFrom = 1;
 
-        if (startDate.month === dateHovered.month) {
+        if (startDate.month() === dateHovered.month()) {
           dayToHoverFrom = startDate.date();
         }
 
