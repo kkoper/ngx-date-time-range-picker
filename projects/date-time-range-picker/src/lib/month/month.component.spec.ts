@@ -134,19 +134,36 @@ describe('MonthComponent', () => {
   it('should know when a day is unavailable', () => {
     const monthToUse = 6;
     const yearToUse = 2020;
-    const hoverToUse = new Date(2018, 6, 4);
     const unavailabilityToUse: DateTimeRange[] = [
       { start: new Date(2020, 6, 1, 14, 0), end: new Date(2020, 6, 10, 21, 0) }
     ];
     component.month = monthToUse;
     component.year = yearToUse;
-    component.hoverFrom = hoverToUse;
     component.unavailability = unavailabilityToUse;
     fixture.detectChanges();
 
     const daysUnavailable = fixture.debugElement.queryAll(By.css('.unavailable'));
 
     expect(daysUnavailable.length).toBe(8);
+  });
+
+  it('should make days unavailable from the first unavailability after the previous selection and before the previous selection', () => {
+    const monthToUse = 6;
+    const yearToUse = 2020;
+    const unavailabilityToUse: DateTimeRange[] = [
+      { start: new Date(2020, 6, 1, 14, 0), end: new Date(2020, 6, 3, 21, 0) },
+      { start: new Date(2020, 6, 7, 14, 0), end: new Date(2020, 6, 10, 21, 0) }
+    ];
+    const hoverToUse = new Date(2020, 6, 4);
+    component.month = monthToUse;
+    component.year = yearToUse;
+    component.unavailability = unavailabilityToUse;
+    component.hoverFrom = hoverToUse;
+    fixture.detectChanges();
+
+    const daysUnavailable = fixture.debugElement.queryAll(By.css('.unavailable'));
+
+    expect(daysUnavailable.length).toBe(27);
   });
 
   it('should emit a date selected event when a day is selected', () => {

@@ -97,7 +97,19 @@ export class MonthComponent implements OnInit {
     }
 
     this.makeDaysInThePastUnavailable();
+    this.makeDaysBeforePreselectionUnavailable();
 
+    this.synchronizeLists();
+  }
+
+  private synchronizeLists() {
+    this.partialDays = Array.from(new Set(this.partialDays));
+    this.fullDays = Array.from(new Set(this.fullDays));
+    this.freeDays = Array.from(new Set(this.freeDays));
+
+    this.partialDays = this.partialDays.filter((value: number) => {
+      return !this.fullDays.includes(value);
+    });
     this.freeDays = this.freeDays.filter((value: number) => {
       return !(this.partialDays.includes(value) || this.fullDays.includes(value));
     });
@@ -110,32 +122,59 @@ export class MonthComponent implements OnInit {
       const endFreeDayNumber = moment(block.start).date();
       const startFullDayNumber = moment(block.start).date();
       const endFullDayNumber = moment(block.end).date();
-      for (let i = startFreeDayNumber + 1; i < endFreeDayNumber; i++) {
-        this.freeDays.push(i);
-      }
+
+      this.addFreeDays(startFreeDayNumber + 1, endFreeDayNumber);
       this.partialDays.push(endFreeDayNumber);
       this.partialDays.push(endFullDayNumber);
-      for (let i = startFullDayNumber + 1; i < endFullDayNumber; i++) {
-        this.fullDays.push(i);
-      }
+      this.addFullDays(startFullDayNumber + 1, endFullDayNumber);
       previousEndDate = moment(block.end);
+
+      if (this.hoverFrom && block.start > this.hoverFrom) {
+        this.markRestOfTheDaysAsFull(block, endFullDayNumber);
+        break;
+      }
+    }
+  }
+
+  private addFullDays(start: number, end: number) {
+    for (let i = start; i < end; i++) {
+      this.fullDays.push(i);
+    }
+  }
+
+  private addFreeDays(start: number, end: number) {
+    for (let i = start; i < end; i++) {
+      this.freeDays.push(i);
+    }
+  }
+
+  private markRestOfTheDaysAsFull(block: DateTimeRange, start: number) {
+    const endOfMonthDay = moment(block.end)
+      .endOf('month')
+      .date();
+    this.addFullDays(start, endOfMonthDay + 1);
+  }
+
+  private makeDaysBeforePreselectionUnavailable() {
+    if (this.hoverFrom) {
+      if (this.isPreselectionInSameMonth()) {
+        const preselectionDay = moment(this.hoverFrom).date();
+        this.addFullDays(1, preselectionDay);
+        this.partialDays.push(preselectionDay);
+      }
     }
   }
 
   private makeDaysInThePastUnavailable() {
     if (this.isCurrentDateInSameMonth()) {
       const currentDay = moment().date();
-      for (let i = 1; i < currentDay; i++) {
-        this.fullDays.push(i);
-      }
+      this.addFullDays(1, currentDay);
       this.partialDays.push(currentDay);
     } else if (this.isCurrentDateInFutureMonth()) {
       const endDay = moment()
         .endOf('month')
         .date();
-      for (let i = 1; i < endDay + 1; i++) {
-        this.fullDays.push(i);
-      }
+      this.addFullDays(1, endDay);
     }
   }
 
@@ -153,6 +192,12 @@ export class MonthComponent implements OnInit {
     return moment().month() === this.month && moment().year() === this.year;
   }
 
+  private isPreselectionInSameMonth() {
+    return (
+      moment(this.hoverFrom).month() === this.month && moment(this.hoverFrom).year() === this.year
+    );
+  }
+
   private makeAllDaysOfTheMonthFree() {
     const start = 0;
     const end = moment()
@@ -160,9 +205,7 @@ export class MonthComponent implements OnInit {
       .month(this.month)
       .endOf('month')
       .date();
-    for (let i = start + 1; i < end + 1; i++) {
-      this.freeDays.push(i);
-    }
+    this.addFreeDays(start + 1, end + 1);
   }
 
   private fillDaysBefore(date: moment_.Moment): void {
