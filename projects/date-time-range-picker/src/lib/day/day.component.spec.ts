@@ -82,26 +82,6 @@ describe('DayComponent', () => {
       const element = fixture.debugElement.query(By.css('.day-block')).nativeElement;
       expect(element.classList.contains('hover')).toBe(true);
     });
-    it('should be shown as hovered if the user hovers in', () => {
-      component.hovered = false;
-      fixture.detectChanges();
-
-      const element = fixture.debugElement.query(By.css('.day-block'));
-      element.triggerEventHandler('mouseenter', null);
-      fixture.detectChanges();
-
-      expect(element.nativeElement.classList.contains('hover')).toBe(true);
-    });
-    it('should not be shown as hovered if the user hovers out', () => {
-      component.hovered = true;
-      fixture.detectChanges();
-
-      const element = fixture.debugElement.query(By.css('.day-block'));
-      element.triggerEventHandler('mouseleave', null);
-      fixture.detectChanges();
-
-      expect(element.nativeElement.classList.contains('hover')).toBe(false);
-    });
     it('should emit a hover event if the user hovers over', () => {
       component.hovered = false;
       spyOn(component.hoverDay, 'emit');
@@ -112,6 +92,31 @@ describe('DayComponent', () => {
       fixture.detectChanges();
 
       expect(component.hoverDay.emit).toHaveBeenCalled();
+    });
+    it('should not emit a hover event if the user hovers over but the day is unavailable', () => {
+      component.hovered = false;
+      component.status = DayState.Full;
+      spyOn(component.hoverDay, 'emit');
+      fixture.detectChanges();
+
+      const element = fixture.debugElement.query(By.css('.day-block'));
+      element.triggerEventHandler('mouseenter', null);
+      fixture.detectChanges();
+
+      expect(component.hoverDay.emit).not.toHaveBeenCalled();
+    });
+    it('should not emit a hover event  if the user hovers over but the day is dummy', () => {
+      component.hovered = false;
+      component.status = DayState.Dummy;
+      spyOn(component.hoverDay, 'emit');
+      fixture.detectChanges();
+
+      const element = fixture.debugElement.query(By.css('.day-block'));
+      element.triggerEventHandler('mouseenter', null);
+      fixture.detectChanges();
+
+      expect(component.hoverDay.emit).not.toHaveBeenCalled();
+      expect(component.hovered).toBe(false);
     });
   });
 

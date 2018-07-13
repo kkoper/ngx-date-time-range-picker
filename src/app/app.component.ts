@@ -9,11 +9,12 @@ import { DateTimeRange, DayState } from 'date-time-range-picker';
 export class AppComponent {
   dayStatuses = DayState;
 
-  month = 1;
+  month = 6;
   year = 2018;
   unavailability: DateTimeRange[] = [
     { start: new Date(2018, 7, 17, 10, 0), end: new Date(2018, 7, 19, 21, 0) }
   ];
+  hoverFrom = new Date(2018, 1, 1);
 
   onDateSelected(date: Date) {
     console.log('date selected', date);

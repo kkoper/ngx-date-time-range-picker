@@ -71,11 +71,12 @@ describe('MonthComponent', () => {
 
   it('should know when a day is hovered', () => {
     const monthToUse = 6;
-    const yearToUse = 2018;
-    const hoverToUse = new Date(2018, 6, 4);
+    const yearToUse = 2020;
+    const hoverToUse = new Date(2020, 6, 4);
     component.month = monthToUse;
     component.year = yearToUse;
     component.hoverFrom = hoverToUse;
+    component.unavailability = [];
     fixture.detectChanges();
 
     component.dayHovered(10);

@@ -9,7 +9,19 @@ import { DayState } from '../models/day-state';
 export class DayComponent implements OnInit {
   @Input() value?: number;
   @Input() status: DayState;
-  @Input() hovered: boolean;
+
+  private _hovered = false;
+  @Input()
+  get hovered(): boolean {
+    return this._hovered;
+  }
+  set hovered(hover: boolean) {
+    if (hover && this.isDayHoverable()) {
+      this._hovered = true;
+    } else {
+      this._hovered = false;
+    }
+  }
 
   @Output() selectDay = new EventEmitter<number>();
   @Output() hoverDay = new EventEmitter<number>();
@@ -21,15 +33,18 @@ export class DayComponent implements OnInit {
   ngOnInit() {}
 
   hoverIn(): void {
-    this.hovered = true;
-    this.hoverDay.emit(this.value);
+    if (this.isDayHoverable()) {
+      this.hoverDay.emit(this.value);
+    }
   }
 
-  hoverOut(): void {
-    this.hovered = false;
-  }
+  hoverOut(): void {}
 
   onDaySelected(): void {
     this.selectDay.emit(this.value);
+  }
+
+  private isDayHoverable(): boolean {
+    return this.status !== DayState.Full && this.status !== DayState.Dummy;
   }
 }

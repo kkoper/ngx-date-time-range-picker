@@ -44,13 +44,15 @@ export class MonthComponent implements OnInit {
       if (startDate < dateHovered) {
         let dayToHoverFrom = 1;
 
-        if (moment(this.hoverFrom).month === dateHovered.month) {
+        if (startDate.month === dateHovered.month) {
           dayToHoverFrom = startDate.date();
         }
 
         this.days = this.days.map((day: Day) => {
           if (dayToHoverFrom <= day.value && day.value <= hoveredDay) {
             day.hovered = true;
+          } else {
+            day.hovered = false;
           }
 
           return day;
