@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DayComponent } from '../day/day.component';
@@ -12,7 +13,11 @@ describe('MonthComponent', () => {
     TestBed.configureTestingModule({
       imports: [],
       declarations: [MonthComponent, DayComponent]
-    }).compileComponents();
+    })
+      .overrideComponent(MonthComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import * as moment_ from 'moment';
 import { DateTimeRange } from '../models/date-time-range';
 import { DayState } from '../models/day-state';
@@ -8,7 +15,8 @@ const moment = moment_;
 @Component({
   selector: 'ngx-month',
   templateUrl: './month.component.html',
-  styleUrls: ['./month.component.scss']
+  styleUrls: ['./month.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MonthComponent implements OnInit {
   @Input() month: number;

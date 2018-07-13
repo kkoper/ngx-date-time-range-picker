@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '../../../../../node_modules/@angular/platform-browser';
 import { DayState } from '../models/day-state';
@@ -8,9 +9,11 @@ describe('DayComponent', () => {
   let fixture: ComponentFixture<DayComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DayComponent]
-    }).compileComponents();
+    TestBed.configureTestingModule({ declarations: [DayComponent] })
+      .overrideComponent(DayComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

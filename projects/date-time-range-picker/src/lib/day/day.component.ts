@@ -1,10 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import { DayState } from '../models/day-state';
 
 @Component({
   selector: 'ngx-day',
   templateUrl: './day.component.html',
-  styleUrls: ['./day.component.scss']
+  styleUrls: ['./day.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DayComponent implements OnInit {
   @Input() value?: number;
