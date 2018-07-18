@@ -25,6 +25,9 @@ export class TimeComponent implements OnInit {
 
   private _selectedTimeOption: TimeSegment;
   get selectedTimeOption(): TimeSegment {
+    if (!this._selectedTimeOption) {
+      this._selectedTimeOption = { hour: 9, minute: 0, isBlocked: false };
+    }
     return this._selectedTimeOption;
   }
   set selectedTimeOption(value: TimeSegment) {
@@ -38,6 +41,10 @@ export class TimeComponent implements OnInit {
   ngOnInit() {
     this.initializeTimeSegments();
     this.applyUnavailabilities();
+  }
+
+  compareFn(t1: TimeSegment, t2: TimeSegment): boolean {
+    return t1 && t2 && t1.hour === t2.hour && t1.minute === t2.minute;
   }
 
   private applyUnavailabilities(): void {

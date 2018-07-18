@@ -1,3 +1,3 @@
-<select [(ngModel)]="selectedTimeOption">
+<select [(ngModel)]="selectedTimeOption" [compareWith]="compareFn">
   <option *ngFor='let timeOption of timeOptions' [ngValue]="timeOption" [disabled]='timeOption.isBlocked'>{{timeOption.hour | number:'2.0-0'}}:{{timeOption.minute | number:'2.0-0'}}</option>
 </select>
