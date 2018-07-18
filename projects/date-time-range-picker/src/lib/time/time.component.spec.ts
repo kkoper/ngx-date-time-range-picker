@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -12,7 +13,11 @@ describe('TimeComponent', () => {
     TestBed.configureTestingModule({
       imports: [CommonModule, FormsModule],
       declarations: [TimeComponent]
-    }).compileComponents();
+    })
+      .overrideComponent(TimeComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
