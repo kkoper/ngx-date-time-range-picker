@@ -63,18 +63,6 @@
             "browserTarget": "date-time-range-picker-app:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": ["src/styles.scss"],
-            "scripts": [],
-            "assets": ["src/favicon.ico", "src/assets"]
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -130,14 +118,6 @@
             "production": {
               "project": "projects/date-time-range-picker/ng-package.prod.json"
             }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/date-time-range-picker/src/test.ts",
-            "tsConfig": "projects/date-time-range-picker/tsconfig.spec.json",
-            "karmaConfig": "projects/date-time-range-picker/karma.conf.js"
           }
         },
         "lint": {
