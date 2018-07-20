@@ -15,7 +15,7 @@ branches:
 script:
   - yarn test
   - yarn build_lib
-  - yarn build --prod
+  - yarn build:prod
 
 deploy:
   provider: pages
