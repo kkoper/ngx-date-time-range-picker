@@ -8,6 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod --base-href \"https://snappcar.github.io/ngx-date-time-range-picker/\"",
     "test": "jest",
     "lint": "ng lint",
     "e2e": "ng e2e",
