@@ -13,8 +13,9 @@ branches:
   - master
 
 script:
-  - npm run test
-  - ng build --prod
+  - yarn test
+  - yarn build_lib
+  - yarn build --prod
 
 deploy:
   provider: pages
