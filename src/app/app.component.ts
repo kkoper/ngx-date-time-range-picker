@@ -1,44 +1,56 @@
-import { Time } from '@angular/common';
-import { Component } from '@angular/core';
-import { DateTimeRange, DayState } from 'date-time-range-picker';
+import { Component, OnInit } from '@angular/core';
+import { DateTimeRange } from 'date-time-range-picker';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  dayStatuses = DayState;
-
-  month = 6;
-  year = 2018;
-  hoverFrom = new Date(2018, 6, 17);
-  unavailability: DateTimeRange[] = [
-    // { start: new Date(2018, 6, 14, 10, 0), end: new Date(2018, 6, 14, 21, 0) },
-    // { start: new Date(2018, 6, 16, 10, 0), end: new Date(2018, 6, 18, 18, 0) },
-    // { start: new Date(2018, 6, 18, 10, 0), end: new Date(2018, 6, 21, 21, 0) },
-    { start: new Date(2018, 6, 25, 10, 0), end: new Date(2018, 6, 26, 11, 0) },
-    { start: new Date(2018, 6, 26, 16, 0), end: new Date(2018, 6, 26, 18, 0) },
-    { start: new Date(2018, 6, 26, 23, 0), end: new Date(2018, 6, 27, 11, 0) }
+export class AppComponent implements OnInit {
+  unavailability: DateTimeRange[][] = [
+    [
+      { start: new Date(2019, 0, 14, 10, 0), end: new Date(2019, 0, 14, 21, 0) },
+      { start: new Date(2019, 0, 16, 10, 0), end: new Date(2019, 0, 18, 18, 0) },
+      { start: new Date(2019, 0, 26, 16, 0), end: new Date(2019, 0, 26, 18, 0) },
+      { start: new Date(2019, 0, 26, 23, 0), end: new Date(2019, 0, 27, 11, 0) }
+    ],
+    [{ start: new Date(2019, 1, 26, 23, 0), end: new Date(2019, 1, 27, 11, 0) }],
+    [{ start: new Date(2019, 2, 26, 23, 0), end: new Date(2019, 2, 27, 11, 0) }],
+    [
+      { start: new Date(2019, 3, 18, 10, 0), end: new Date(2019, 3, 21, 21, 0) },
+      { start: new Date(2019, 3, 25, 10, 0), end: new Date(2019, 3, 26, 11, 0) },
+      { start: new Date(2019, 3, 26, 16, 0), end: new Date(2019, 3, 26, 18, 0) },
+      { start: new Date(2019, 3, 26, 23, 0), end: new Date(2019, 3, 27, 11, 0) }
+    ],
+    [
+      { start: new Date(2019, 4, 14, 10, 0), end: new Date(2019, 4, 14, 21, 0) },
+      { start: new Date(2019, 4, 16, 10, 0), end: new Date(2019, 4, 18, 18, 0) },
+      { start: new Date(2019, 4, 18, 10, 0), end: new Date(2019, 4, 21, 21, 0) }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
   ];
+  monthUnavailability: DateTimeRange[];
 
-  // For the time component
-  selectedDate = new Date(2018, 6, 26);
-
-  onDateSelected(date: Date) {
-    this.hoverFrom = date;
-    console.log('date selected', date);
+  ngOnInit() {
+    this.monthUnavailability = this.unavailability[new Date().getMonth()];
   }
 
-  onDaySelected(day: number) {
-    console.log('day selected', day);
+  onDateTimeSelected(date: Date) {
+    console.log('date-time selected', date);
   }
 
-  onTimeSelected(time: Time) {
-    console.log('time selected', time);
-  }
-
-  onDayHovered(day: number) {
-    console.log('day hovered', day);
+  onMonthChanged(date: Date) {
+    this.monthUnavailability = this.unavailability[date.getMonth()];
+    console.log('month changed', date);
   }
 }

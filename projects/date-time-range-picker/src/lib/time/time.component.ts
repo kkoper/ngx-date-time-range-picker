@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output
 } from '@angular/core';
@@ -18,7 +19,7 @@ const moment = moment_;
   styleUrls: ['./time.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimeComponent implements OnInit {
+export class TimeComponent implements OnInit, OnChanges {
   @Input() unavailabilities: DateTimeRange[];
   @Input() selectedDate: Date;
   @Output() timeSelected = new EventEmitter<Time>();
@@ -38,6 +39,11 @@ export class TimeComponent implements OnInit {
 
   constructor() {}
 
+  ngOnChanges() {
+    this.initializeTimeSegments();
+    this.applyUnavailabilities();
+  }
+
   ngOnInit() {
     this.initializeTimeSegments();
     this.applyUnavailabilities();
@@ -48,22 +54,22 @@ export class TimeComponent implements OnInit {
   }
 
   private applyUnavailabilities(): void {
+    const currentDay = moment(this.selectedDate);
     for (const unavailability of this.unavailabilities) {
       const startMoment = moment(unavailability.start);
       const endMoment = moment(unavailability.end);
-      const currentDay = moment(this.selectedDate);
 
-      if (this.isSameDay(startMoment, currentDay)) {
-        if (this.isSameDay(endMoment, currentDay)) {
+      if (startMoment.isSame(currentDay, 'day')) {
+        if (endMoment.isSame(currentDay, 'day')) {
           this.handleUnavailabilityWithinTheDay(unavailability);
         } else {
           this.handleUnavailabilityOverlappingEndOfDay(unavailability);
         }
       } else {
-        if (this.isSameDay(endMoment, currentDay)) {
+        if (endMoment.isSame(currentDay, 'day')) {
           this.handleUnavailabilityOverlappingBeginOfDay(unavailability);
         } else {
-          this.handleUnavailabilityOverlappingFullDay(unavailability);
+          this.handleUnavailabilityOverlappingFullDay();
         }
       }
     }
@@ -105,7 +111,7 @@ export class TimeComponent implements OnInit {
     this.makeTimesBlocked(startTime, endTime);
   }
 
-  private handleUnavailabilityOverlappingFullDay(unavailability: DateTimeRange): any {
+  private handleUnavailabilityOverlappingFullDay(): any {
     const startTime: Time = {
       hours: 0,
       minutes: 0
@@ -129,17 +135,6 @@ export class TimeComponent implements OnInit {
 
       return timeOption;
     });
-  }
-
-  private isSameDay(firstDate: moment_.Moment, secondDate: moment_.Moment): boolean {
-    if (
-      firstDate.year() === secondDate.year() &&
-      firstDate.month() === secondDate.month() &&
-      firstDate.day() === secondDate.day()
-    ) {
-      return true;
-    }
-    return false;
   }
 
   private initializeTimeSegments(): void {

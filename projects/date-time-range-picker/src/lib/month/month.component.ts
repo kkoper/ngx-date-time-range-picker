@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output
 } from '@angular/core';
@@ -18,25 +19,33 @@ const moment = moment_;
   styleUrls: ['./month.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MonthComponent implements OnInit {
-  @Input() month: number;
-  @Input() year: number;
+export class MonthComponent implements OnInit, OnChanges {
   @Input() unavailability: DateTimeRange[];
+  @Input() year: number;
+  @Input() month: number;
   @Input() hoverFrom: Date;
-
   @Output() dateSelected = new EventEmitter<Date>();
 
-  days: Day[] = [];
+  days: Day[];
 
-  private freeDays: number[] = [];
-  private partialDays: number[] = [];
-  private fullDays: number[] = [];
+  private freeDays: number[];
+  private partialDays: number[];
+  private fullDays: number[];
 
   constructor() {}
 
+  ngOnChanges() {
+    this.assessAvailabilityPerDay();
+    this.setupMonth();
+  }
+
   ngOnInit() {
     this.assessAvailabilityPerDay();
+    this.setupMonth();
+  }
 
+  private setupMonth() {
+    this.days = [];
     const dateToUse = moment()
       .year(this.year)
       .month(this.month);
@@ -52,7 +61,7 @@ export class MonthComponent implements OnInit {
       if (startDate < dateHovered) {
         let dayToHoverFrom = 1;
 
-        if (startDate.month() === dateHovered.month()) {
+        if (startDate.isSame(dateHovered, 'month')) {
           dayToHoverFrom = startDate.date();
         }
 
@@ -90,6 +99,10 @@ export class MonthComponent implements OnInit {
   }
 
   private assessAvailabilityPerDay(): void {
+    this.freeDays = [];
+    this.partialDays = [];
+    this.fullDays = [];
+
     this.makeAllDaysOfTheMonthFree();
 
     if (this.isCurrentDateInFutureMonth()) {
