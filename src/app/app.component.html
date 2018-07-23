@@ -1,4 +1,1 @@
-<ngx-month [month]='month' [year]='year' [unavailability]='unavailability' [hoverFrom]="hoverFrom" (dateSelected)='onDateSelected($event)'>
-</ngx-month>
-
-<ngx-time [selectedDate]='selectedDate' [unavailabilities]='unavailability' (timeSelected)='onTimeSelected($event)'></ngx-time>
+<ngx-date-time [monthUnavailabilities]='unavailability' (monthChanged)='onMonthChanged($event)' (dateTimeSelected)='onDateTimeSelected($event)'></ngx-date-time>
