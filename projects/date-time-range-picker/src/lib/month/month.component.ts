@@ -61,7 +61,7 @@ export class MonthComponent implements OnInit, OnChanges {
       if (startDate < dateHovered) {
         let dayToHoverFrom = 1;
 
-        if (startDate.month() === dateHovered.month()) {
+        if (startDate.isSame(dateHovered, 'month')) {
           dayToHoverFrom = startDate.date();
         }
 
