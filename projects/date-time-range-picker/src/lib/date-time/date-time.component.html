@@ -1,2 +1,7 @@
+<div>{{year}}</div>
+
+<button class='btn-previous-month' (click)='goToPreviousMonth()'>Previous</button>
+<div>{{monthName}}</div>
+
 <ngx-month [year]='year' [month]='currentMonth' [unavailability]='monthUnavailabilities'></ngx-month>
 <ngx-time [unavailabilities]='timeUnavailabilities' [selectedDate]='selectedDayMonth'></ngx-time>
