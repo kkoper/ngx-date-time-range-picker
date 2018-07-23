@@ -14,7 +14,7 @@ export class DateTimeComponent implements OnInit {
   @Output() monthChanged = new EventEmitter<Date>();
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
-  activeMoment: moment_.Moment;
+  activeMoment: moment_.Moment = moment();
 
   // Month component needs:
   get year(): number {
@@ -37,9 +37,7 @@ export class DateTimeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.activeMoment = moment();
-  }
+  ngOnInit() {}
 
   goToPreviousMonth(): void {
     this.activeMoment.subtract(1, 'months');
