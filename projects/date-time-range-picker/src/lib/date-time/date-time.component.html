@@ -4,5 +4,5 @@
 <div>{{monthName}}</div>
 <button class='btn-next-month' (click)='goToNextMonth()'>Next</button>
 
-<ngx-month [year]='year' [month]='currentMonth' [unavailability]='monthUnavailabilities'></ngx-month>
-<ngx-time [unavailabilities]='timeUnavailabilities' [selectedDate]='selectedDayMonth'></ngx-time>
+<ngx-month [year]='year' [month]='currentMonth' [unavailability]='monthUnavailabilities' (dateSelected)='onDayMonthSelected($event)'></ngx-month>
+<ngx-time [unavailabilities]='timeUnavailabilities' [selectedDate]='selectedDate' (timeSelected)='onTimeSelected($event)'></ngx-time>

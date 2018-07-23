@@ -48,10 +48,10 @@ export class TimeComponent implements OnInit {
   }
 
   private applyUnavailabilities(): void {
+    const currentDay = moment(this.selectedDate);
     for (const unavailability of this.unavailabilities) {
       const startMoment = moment(unavailability.start);
       const endMoment = moment(unavailability.end);
-      const currentDay = moment(this.selectedDate);
 
       if (this.isSameDay(startMoment, currentDay)) {
         if (this.isSameDay(endMoment, currentDay)) {
