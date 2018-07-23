@@ -14,71 +14,61 @@ export class DateTimeComponent implements OnInit {
   @Output() monthChanged = new EventEmitter<Date>();
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
+  activeMoment: moment_.Moment;
+
   // Month component needs:
-  year: number;
-  currentMonth: number;
+  get year(): number {
+    return this.activeMoment.year();
+  }
+  get currentMonth(): number {
+    return this.activeMoment.month();
+  }
 
   // Time component needs:
   timeUnavailabilities: DateTimeRange[] = [];
-  selectedDate: Date = new Date();
+  get selectedDate(): Date {
+    return this.activeMoment.toDate();
+  }
 
   // Computed values:
   get monthName(): string {
-    return moment()
-      .month(this.currentMonth)
-      .format('MMMM');
+    return this.activeMoment.format('MMMM');
   }
 
   constructor() {}
 
   ngOnInit() {
-    this.year = moment().year();
-    this.currentMonth = moment().month();
+    this.activeMoment = moment();
   }
 
   goToPreviousMonth(): void {
-    const previousMonth = moment()
-      .subtract(1, 'months')
-      .month();
-    const previousYear = moment()
-      .subtract(1, 'months')
-      .year();
-
-    this.year = previousYear;
-    this.currentMonth = previousMonth;
-    this.monthChanged.emit(new Date(this.year, this.currentMonth));
+    this.activeMoment.subtract(1, 'months');
+    this.monthChanged.emit(this.activeMoment.toDate());
   }
 
   goToNextMonth(): void {
-    const nextMonth = moment()
-      .add(1, 'months')
-      .month();
-    const nextYear = moment()
-      .add(1, 'months')
-      .year();
-
-    this.year = nextYear;
-    this.currentMonth = nextMonth;
-    this.monthChanged.emit(new Date(this.year, this.currentMonth));
+    this.activeMoment.add(1, 'months');
+    this.monthChanged.emit(this.activeMoment.toDate());
   }
 
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
-    this.selectedDate = selectedDate;
+    this.activeMoment.date(selectedDate.getDate());
   }
 
   onTimeSelected(selectedTime: Time): void {
-    const dateToEmit = moment(this.selectedDate)
+    this.activeMoment
       .hour(selectedTime.hours)
       .minute(selectedTime.minutes)
       .startOf('minute');
-    this.dateTimeSelected.emit(dateToEmit.toDate());
+    this.dateTimeSelected.emit(this.activeMoment.toDate());
   }
 
   private calcuateTimeUnavailabilities(date: Date): void {
     // Get only unavailabilities that affect the time for that day
     const newTimeUnavailabilities: DateTimeRange[] = [];
     const selectedDay = moment(date);
+    const now = moment();
 
     for (const unavailability of this.monthUnavailabilities) {
       const startMoment = moment(unavailability.start);
@@ -90,6 +80,12 @@ export class DateTimeComponent implements OnInit {
       ) {
         newTimeUnavailabilities.push(unavailability);
       }
+    }
+
+    if (selectedDay.isSame(now, 'day')) {
+      const startMoment = now.startOf('day');
+      const endMoment = now.add(30, 'minutes');
+      newTimeUnavailabilities.push({ start: startMoment.toDate(), end: endMoment.toDate() });
     }
 
     this.timeUnavailabilities = [...newTimeUnavailabilities];
