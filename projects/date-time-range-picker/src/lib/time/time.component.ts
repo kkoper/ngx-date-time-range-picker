@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output
 } from '@angular/core';
@@ -18,7 +19,7 @@ const moment = moment_;
   styleUrls: ['./time.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimeComponent implements OnInit {
+export class TimeComponent implements OnInit, OnChanges {
   @Input() unavailabilities: DateTimeRange[];
   @Input() selectedDate: Date;
   @Output() timeSelected = new EventEmitter<Time>();
@@ -37,6 +38,11 @@ export class TimeComponent implements OnInit {
   timeOptions: TimeSegment[];
 
   constructor() {}
+
+  ngOnChanges() {
+    this.initializeTimeSegments();
+    this.applyUnavailabilities();
+  }
 
   ngOnInit() {
     this.initializeTimeSegments();
