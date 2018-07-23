@@ -43,4 +43,16 @@ export class DateTimeComponent implements OnInit {
     this.year = previousYear;
     this.currentMonth = previousMonth;
   }
+
+  goToNextMonth(): void {
+    const nextMonth = moment()
+      .add(1, 'months')
+      .month();
+    const nextYear = moment()
+      .add(1, 'months')
+      .year();
+
+    this.year = nextYear;
+    this.currentMonth = nextMonth;
+  }
 }

@@ -49,10 +49,6 @@ describe('DateTimeComponent', () => {
     expect(component.currentMonth).toBe(currentMonth);
   });
 
-  it('should go to next month', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should show the current month and year', () => {
     const currentYear = moment().year();
     const currentMonth = moment().format('MMMM');
@@ -75,6 +71,23 @@ describe('DateTimeComponent', () => {
 
     expect(component.currentMonth).toBe(previousMonth);
     expect(component.year).toBe(previousYear);
+  });
+
+  it('should go to next month', () => {
+    const nextMonth = moment()
+      .add(1, 'months')
+      .month();
+    const nextYear = moment()
+      .add(1, 'months')
+      .year();
+    const nextMonthButton = fixture.debugElement.queryAll(By.css('.btn-next-month'));
+    expect(nextMonthButton.length).toBe(1);
+
+    nextMonthButton[0].triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    expect(component.currentMonth).toBe(nextMonth);
+    expect(component.year).toBe(nextYear);
   });
 
   it('should give month unavailabilities', () => {
