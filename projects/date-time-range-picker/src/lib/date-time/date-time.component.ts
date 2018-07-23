@@ -11,7 +11,7 @@ const moment = moment_;
 })
 export class DateTimeComponent implements OnInit {
   @Input() monthUnavailabilities: DateTimeRange[] = [];
-  @Output() getMonthUnavailabilities = new EventEmitter<Date>();
+  @Output() monthChanged = new EventEmitter<Date>();
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   // Month component needs:
@@ -46,6 +46,7 @@ export class DateTimeComponent implements OnInit {
 
     this.year = previousYear;
     this.currentMonth = previousMonth;
+    this.monthChanged.emit(new Date(this.year, this.currentMonth));
   }
 
   goToNextMonth(): void {
@@ -58,6 +59,7 @@ export class DateTimeComponent implements OnInit {
 
     this.year = nextYear;
     this.currentMonth = nextMonth;
+    this.monthChanged.emit(new Date(this.year, this.currentMonth));
   }
 
   onDayMonthSelected(selectedDate: Date): void {

@@ -57,13 +57,20 @@ describe('DateTimeComponent', () => {
     expect(fixture.debugElement.nativeElement.innerHTML).toContain(currentMonth);
   });
 
-  it('should go to previous month', () => {
+  it('should go to previous month', done => {
     const previousMonth = moment()
       .subtract(1, 'months')
       .month();
     const previousYear = moment()
       .subtract(1, 'months')
       .year();
+    spyOn(component.monthChanged, 'emit').and.callThrough();
+    component.monthChanged.subscribe((selectedDate: Date) => {
+      expect(selectedDate.getFullYear()).toBe(previousYear);
+      expect(selectedDate.getMonth()).toBe(previousMonth);
+      done();
+    });
+
     const previousMonthButton = fixture.debugElement.queryAll(By.css('.btn-previous-month'));
     expect(previousMonthButton.length).toBe(1);
 
@@ -72,15 +79,23 @@ describe('DateTimeComponent', () => {
 
     expect(component.currentMonth).toBe(previousMonth);
     expect(component.year).toBe(previousYear);
+    expect(component.monthChanged.emit).toHaveBeenCalled();
   });
 
-  it('should go to next month', () => {
+  it('should go to next month', done => {
     const nextMonth = moment()
       .add(1, 'months')
       .month();
     const nextYear = moment()
       .add(1, 'months')
       .year();
+    spyOn(component.monthChanged, 'emit').and.callThrough();
+    component.monthChanged.subscribe((selectedDate: Date) => {
+      expect(selectedDate.getFullYear()).toBe(nextYear);
+      expect(selectedDate.getMonth()).toBe(nextMonth);
+      done();
+    });
+
     const nextMonthButton = fixture.debugElement.queryAll(By.css('.btn-next-month'));
     expect(nextMonthButton.length).toBe(1);
 
@@ -89,6 +104,7 @@ describe('DateTimeComponent', () => {
 
     expect(component.currentMonth).toBe(nextMonth);
     expect(component.year).toBe(nextYear);
+    expect(component.monthChanged.emit).toHaveBeenCalled();
   });
 
   it('should give time unavailabilities when a day-month is picked', () => {
