@@ -59,17 +59,17 @@ export class TimeComponent implements OnInit, OnChanges {
       const startMoment = moment(unavailability.start);
       const endMoment = moment(unavailability.end);
 
-      if (this.isSameDay(startMoment, currentDay)) {
-        if (this.isSameDay(endMoment, currentDay)) {
+      if (startMoment.isSame(currentDay, 'day')) {
+        if (endMoment.isSame(currentDay, 'day')) {
           this.handleUnavailabilityWithinTheDay(unavailability);
         } else {
           this.handleUnavailabilityOverlappingEndOfDay(unavailability);
         }
       } else {
-        if (this.isSameDay(endMoment, currentDay)) {
+        if (endMoment.isSame(currentDay, 'day')) {
           this.handleUnavailabilityOverlappingBeginOfDay(unavailability);
         } else {
-          this.handleUnavailabilityOverlappingFullDay(unavailability);
+          this.handleUnavailabilityOverlappingFullDay();
         }
       }
     }
@@ -111,7 +111,7 @@ export class TimeComponent implements OnInit, OnChanges {
     this.makeTimesBlocked(startTime, endTime);
   }
 
-  private handleUnavailabilityOverlappingFullDay(unavailability: DateTimeRange): any {
+  private handleUnavailabilityOverlappingFullDay(): any {
     const startTime: Time = {
       hours: 0,
       minutes: 0
@@ -135,17 +135,6 @@ export class TimeComponent implements OnInit, OnChanges {
 
       return timeOption;
     });
-  }
-
-  private isSameDay(firstDate: moment_.Moment, secondDate: moment_.Moment): boolean {
-    if (
-      firstDate.year() === secondDate.year() &&
-      firstDate.month() === secondDate.month() &&
-      firstDate.day() === secondDate.day()
-    ) {
-      return true;
-    }
-    return false;
   }
 
   private initializeTimeSegments(): void {
