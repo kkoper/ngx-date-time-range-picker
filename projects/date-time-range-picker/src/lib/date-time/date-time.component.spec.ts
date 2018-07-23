@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { DayComponent } from '../day/day.component';
 import { MonthComponent } from '../month/month.component';
+import { TimeComponent } from '../time/time.component';
 import { DateTimeComponent } from './date-time.component';
 
 describe('DateTimeComponent', () => {
@@ -10,7 +12,8 @@ describe('DateTimeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DateTimeComponent, MonthComponent, DayComponent]
+      imports: [FormsModule],
+      declarations: [DateTimeComponent, MonthComponent, DayComponent, TimeComponent]
     }).compileComponents();
   }));
 
@@ -31,7 +34,9 @@ describe('DateTimeComponent', () => {
   });
 
   it('should show a time', () => {
-    expect(component).toBeTruthy();
+    const timeComponent = fixture.debugElement.queryAll(By.css('ngx-time'));
+
+    expect(timeComponent.length).toBe(1);
   });
 
   it('should go to next month', () => {

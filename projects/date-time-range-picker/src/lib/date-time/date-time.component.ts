@@ -7,9 +7,14 @@ import { DateTimeRange } from '../models/date-time-range';
   styleUrls: ['./date-time.component.scss']
 })
 export class DateTimeComponent implements OnInit {
+  // Month component needs:
   year = 2018;
   currentMonth = 6;
   monthUnavailabilities: DateTimeRange[] = [];
+
+  // Time component needs:
+  timeUnavailabilities: DateTimeRange[] = [];
+  selectedDayMonth: Date = new Date();
 
   constructor() {}
 
