@@ -21,16 +21,24 @@ const moment = moment_;
 })
 export class MonthComponent implements OnInit, OnChanges {
   @Input() unavailability: DateTimeRange[];
-  @Input() year: number;
-  @Input() month: number;
   @Input() hoverFrom: Date;
   @Output() dateSelected = new EventEmitter<Date>();
+  @Output() monthChanged = new EventEmitter<Date>();
 
   days: Day[];
 
   private freeDays: number[];
   private partialDays: number[];
   private fullDays: number[];
+  activeMoment: moment_.Moment = moment();
+
+  // Computed values:
+  get monthName(): string {
+    return this.activeMoment.format('MMMM');
+  }
+  get year(): number {
+    return this.activeMoment.year();
+  }
 
   constructor() {}
 
@@ -44,20 +52,27 @@ export class MonthComponent implements OnInit, OnChanges {
     this.setupMonth();
   }
 
+  goToPreviousMonth(): void {
+    this.activeMoment.subtract(1, 'months');
+    this.monthChanged.emit(this.activeMoment.toDate());
+  }
+
+  goToNextMonth(): void {
+    this.activeMoment.add(1, 'months');
+    this.monthChanged.emit(this.activeMoment.toDate());
+  }
+
   private setupMonth() {
     this.days = [];
-    const dateToUse = moment()
-      .year(this.year)
-      .month(this.month);
-    this.fillMonthDays(dateToUse);
-    this.fillDaysBefore(dateToUse);
-    this.fillDaysAfter(dateToUse);
+    this.fillMonthDays(this.activeMoment);
+    this.fillDaysBefore(this.activeMoment);
+    this.fillDaysAfter(this.activeMoment);
   }
 
   dayHovered(hoveredDay: number): void {
     if (this.hoverFrom) {
       const startDate = moment(this.hoverFrom);
-      const dateHovered = moment(new Date(this.year, this.month, hoveredDay));
+      const dateHovered = this.activeMoment.clone().date(hoveredDay);
       if (startDate < dateHovered) {
         let dayToHoverFrom = 1;
 
@@ -79,7 +94,7 @@ export class MonthComponent implements OnInit, OnChanges {
   }
 
   daySelected(day: number): void {
-    this.dateSelected.emit(new Date(this.year, this.month, day));
+    this.dateSelected.emit(this.activeMoment.date(day).toDate());
   }
 
   private fillMonthDays(date: moment_.Moment): void {
@@ -188,42 +203,26 @@ export class MonthComponent implements OnInit, OnChanges {
   }
 
   private isCurrentDateInFutureMonth() {
-    return (
-      moment() >
-      moment()
-        .year(this.year)
-        .month(this.month)
-        .endOf('month')
-    );
+    return moment().isAfter(this.activeMoment, 'month');
   }
 
   private isCurrentDateInSameMonth() {
-    return moment().month() === this.month && moment().year() === this.year;
+    return moment().isSame(this.activeMoment, 'month');
   }
 
   private isPreselectionInSameMonth() {
-    return (
-      moment(this.hoverFrom).month() === this.month && moment(this.hoverFrom).year() === this.year
-    );
+    return moment(this.hoverFrom).isSame(this.activeMoment, 'month');
   }
 
   private makeAllDaysOfTheMonthFree() {
     const start = 1;
-    const end = moment()
-      .year(this.year)
-      .month(this.month)
-      .endOf('month')
-      .date();
+    const end = this.activeMoment.daysInMonth();
     this.addFreeDays(start, end + 1);
   }
 
   private makeAllDaysOfTheMonthFull() {
     const start = 1;
-    const end = moment()
-      .year(this.year)
-      .month(this.month)
-      .endOf('month')
-      .date();
+    const end = this.activeMoment.daysInMonth();
     this.addFullDays(start, end + 1);
   }
 

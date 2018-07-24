@@ -1,8 +1,4 @@
-<div>{{year}}</div>
+<input type="text" name="date-picker" id="date-picker" placeholder="Pick a date">
+<ngx-month [unavailability]='monthUnavailabilities' (dateSelected)='onDayMonthSelected($event)' (monthChanged)='onMonthChanged($event)'></ngx-month>
 
-<button class='btn-previous-month' (click)='goToPreviousMonth()'>Previous</button>
-<div>{{monthName}}</div>
-<button class='btn-next-month' (click)='goToNextMonth()'>Next</button>
-
-<ngx-month [year]='year' [month]='currentMonth' [unavailability]='monthUnavailabilities' (dateSelected)='onDayMonthSelected($event)'></ngx-month>
 <ngx-time [unavailabilities]='timeUnavailabilities' [selectedDate]='selectedDate' (timeSelected)='onTimeSelected($event)'></ngx-time>

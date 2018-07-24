@@ -24,42 +24,19 @@ export class DateTimeComponent implements OnInit {
 
   activeMoment: moment_.Moment = moment();
 
-  // Month component needs:
-  get year(): number {
-    return this.activeMoment.year();
-  }
-  get currentMonth(): number {
-    return this.activeMoment.month();
-  }
-
   // Time component needs:
   timeUnavailabilities: DateTimeRange[] = [];
   get selectedDate(): Date {
     return this.activeMoment.toDate();
   }
 
-  // Computed values:
-  get monthName(): string {
-    return this.activeMoment.format('MMMM');
-  }
-
   constructor() {}
 
   ngOnInit() {}
 
-  goToPreviousMonth(): void {
-    this.activeMoment.subtract(1, 'months');
-    this.monthChanged.emit(this.activeMoment.toDate());
-  }
-
-  goToNextMonth(): void {
-    this.activeMoment.add(1, 'months');
-    this.monthChanged.emit(this.activeMoment.toDate());
-  }
-
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
-    this.activeMoment.date(selectedDate.getDate());
+    this.activeMoment = moment(selectedDate);
   }
 
   onTimeSelected(selectedTime: Time): void {
@@ -68,6 +45,10 @@ export class DateTimeComponent implements OnInit {
       .minute(selectedTime.minutes)
       .startOf('minute');
     this.dateTimeSelected.emit(this.activeMoment.toDate());
+  }
+
+  onMonthChanged(date: Date): void {
+    this.monthChanged.emit(date);
   }
 
   private calcuateTimeUnavailabilities(date: Date): void {
