@@ -30,16 +30,49 @@ describe('DateTimeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show a month', () => {
+  it('should not show a month by default', () => {
     const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
 
+    expect(monthElement.length).toBe(0);
+  });
+
+  it('should show a month when the user clicks the input', () => {
+    const datePickerInput = fixture.debugElement.queryAll(By.css('#datePicker'));
+    expect(datePickerInput.length).toBe(1);
+
+    datePickerInput[0].triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
     expect(monthElement.length).toBe(1);
   });
 
-  it('should show a time', () => {
-    const timeComponent = fixture.debugElement.queryAll(By.css('ngx-time'));
+  it('should not show a time by default', () => {
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-time'));
 
-    expect(timeComponent.length).toBe(1);
+    expect(monthElement.length).toBe(0);
+  });
+
+  it('should show a time when the user clicks the input', () => {
+    const timePickerInput = fixture.debugElement.queryAll(By.css('#timePicker'));
+    expect(timePickerInput.length).toBe(1);
+
+    timePickerInput[0].triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    const timeElement = fixture.debugElement.queryAll(By.css('ngx-time'));
+    expect(timeElement.length).toBe(1);
+  });
+
+  it('should show a time when the user selects the date', () => {
+    component.showTimePicker = false;
+    component.onDayMonthSelected(
+      moment()
+        .date(28)
+        .toDate()
+    );
+
+    expect(component.showTimePicker).toBe(true);
   });
 
   it('should give time unavailabilities when a day-month is picked', () => {

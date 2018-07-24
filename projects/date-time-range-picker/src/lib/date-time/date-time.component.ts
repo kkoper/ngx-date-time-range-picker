@@ -23,6 +23,10 @@ export class DateTimeComponent implements OnInit {
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   activeMoment: moment_.Moment = moment();
+  showDatePicker: boolean;
+  showTimePicker: boolean;
+  dateSelected: boolean;
+  timeSelected: boolean;
 
   // Time component needs:
   timeUnavailabilities: DateTimeRange[] = [];
@@ -37,18 +41,32 @@ export class DateTimeComponent implements OnInit {
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
     this.activeMoment = moment(selectedDate);
+    this.dateSelected = true;
+    this.showDatePicker = false;
+    this.showTimePicker = true;
   }
 
   onTimeSelected(selectedTime: Time): void {
-    this.activeMoment
+    this.activeMoment = this.activeMoment
+      .clone()
       .hour(selectedTime.hours)
       .minute(selectedTime.minutes)
       .startOf('minute');
     this.dateTimeSelected.emit(this.activeMoment.toDate());
+    this.showTimePicker = false;
+    this.timeSelected = true;
   }
 
   onMonthChanged(date: Date): void {
     this.monthChanged.emit(date);
+  }
+
+  toggleDatePicker(): void {
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  toggleTimePicker(): void {
+    this.showTimePicker = !this.showTimePicker;
   }
 
   private calcuateTimeUnavailabilities(date: Date): void {

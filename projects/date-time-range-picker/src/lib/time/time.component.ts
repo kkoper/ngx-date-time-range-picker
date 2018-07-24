@@ -27,7 +27,16 @@ export class TimeComponent implements OnInit, OnChanges {
   private _selectedTimeOption: TimeSegment;
   get selectedTimeOption(): TimeSegment {
     if (!this._selectedTimeOption) {
-      this._selectedTimeOption = { hour: 9, minute: 0, isBlocked: false };
+      if (this.selectedDate) {
+        const preselection = moment(this.selectedDate)
+          .add(1, 'hours')
+          .startOf('hour');
+        this._selectedTimeOption = {
+          hour: preselection.hour(),
+          minute: preselection.minute(),
+          isBlocked: false
+        };
+      }
     }
     return this._selectedTimeOption;
   }

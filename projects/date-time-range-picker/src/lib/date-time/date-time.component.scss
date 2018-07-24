@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: row;
+
+  .input-container {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+
+    input {
+      padding: 8px;
+    }
+
+    ngx-month {
+      padding: 4px;
+      margin-top: 10px;
+      border: 1px solid black;
+    }
+
+    ngx-time {
+      padding: 4px;
+      margin-top: 10px;
+    }
+  }
+}
