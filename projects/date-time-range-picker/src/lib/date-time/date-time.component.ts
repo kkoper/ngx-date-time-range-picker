@@ -23,14 +23,10 @@ export class DateTimeComponent implements OnInit {
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   activeMoment: moment_.Moment = moment();
-
-  // Month component needs:
-  get year(): number {
-    return this.activeMoment.year();
-  }
-  get currentMonth(): number {
-    return this.activeMoment.month();
-  }
+  showDatePicker: boolean;
+  showTimePicker: boolean;
+  dateSelected: boolean;
+  timeSelected: boolean;
 
   // Time component needs:
   timeUnavailabilities: DateTimeRange[] = [];
@@ -38,36 +34,39 @@ export class DateTimeComponent implements OnInit {
     return this.activeMoment.toDate();
   }
 
-  // Computed values:
-  get monthName(): string {
-    return this.activeMoment.format('MMMM');
-  }
-
   constructor() {}
 
   ngOnInit() {}
 
-  goToPreviousMonth(): void {
-    this.activeMoment.subtract(1, 'months');
-    this.monthChanged.emit(this.activeMoment.toDate());
-  }
-
-  goToNextMonth(): void {
-    this.activeMoment.add(1, 'months');
-    this.monthChanged.emit(this.activeMoment.toDate());
-  }
-
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
-    this.activeMoment.date(selectedDate.getDate());
+    this.activeMoment = moment(selectedDate);
+    this.dateSelected = true;
+    this.showDatePicker = false;
+    this.showTimePicker = true;
   }
 
   onTimeSelected(selectedTime: Time): void {
-    this.activeMoment
+    this.activeMoment = this.activeMoment
+      .clone()
       .hour(selectedTime.hours)
       .minute(selectedTime.minutes)
       .startOf('minute');
     this.dateTimeSelected.emit(this.activeMoment.toDate());
+    this.showTimePicker = false;
+    this.timeSelected = true;
+  }
+
+  onMonthChanged(date: Date): void {
+    this.monthChanged.emit(date);
+  }
+
+  toggleDatePicker(): void {
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  toggleTimePicker(): void {
+    this.showTimePicker = !this.showTimePicker;
   }
 
   private calcuateTimeUnavailabilities(date: Date): void {

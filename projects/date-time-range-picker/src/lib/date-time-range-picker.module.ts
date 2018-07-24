@@ -1,3 +1,4 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { MonthComponent } from './month/month.component';
 import { TimeComponent } from './time/time.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OverlayModule],
   declarations: [
     DateTimeRangePickerComponent,
     DayComponent,

@@ -1,3 +1,27 @@
 .month-grid {
   width: 14rem;
+
+  .day-header {
+    width: 1rem;
+    padding: 0.5rem;
+    width: 1rem;
+    text-align: right;
+    display: inline-block;
+    color: slategray;
+  }
+}
+
+.year {
+  text-align: center;
+}
+
+.month-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 8px 0;
+
+  button {
+    margin: 0 4px;
+  }
 }

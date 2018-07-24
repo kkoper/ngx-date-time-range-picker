@@ -30,81 +30,49 @@ describe('DateTimeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show a month', () => {
+  it('should not show a month by default', () => {
     const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
 
+    expect(monthElement.length).toBe(0);
+  });
+
+  it('should show a month when the user clicks the input', () => {
+    const datePickerInput = fixture.debugElement.queryAll(By.css('#datePicker'));
+    expect(datePickerInput.length).toBe(1);
+
+    datePickerInput[0].triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
     expect(monthElement.length).toBe(1);
   });
 
-  it('should show a time', () => {
-    const timeComponent = fixture.debugElement.queryAll(By.css('ngx-time'));
+  it('should not show a time by default', () => {
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-time'));
 
-    expect(timeComponent.length).toBe(1);
+    expect(monthElement.length).toBe(0);
   });
 
-  it('should have the current year and month as a default selection', () => {
-    const currentYear = moment().year();
-    const currentMonth = moment().month();
+  it('should show a time when the user clicks the input', () => {
+    const timePickerInput = fixture.debugElement.queryAll(By.css('#timePicker'));
+    expect(timePickerInput.length).toBe(1);
 
-    expect(component.year).toBe(currentYear);
-    expect(component.currentMonth).toBe(currentMonth);
-  });
-
-  it('should show the current month and year', () => {
-    const currentYear = moment().year();
-    const currentMonth = moment().format('MMMM');
-    expect(fixture.debugElement.nativeElement.innerHTML).toContain(currentYear);
-    expect(fixture.debugElement.nativeElement.innerHTML).toContain(currentMonth);
-  });
-
-  it('should go to previous month', done => {
-    const previousMonth = moment()
-      .subtract(1, 'months')
-      .month();
-    const previousYear = moment()
-      .subtract(1, 'months')
-      .year();
-    spyOn(component.monthChanged, 'emit').and.callThrough();
-    component.monthChanged.subscribe((selectedDate: Date) => {
-      expect(selectedDate.getFullYear()).toBe(previousYear);
-      expect(selectedDate.getMonth()).toBe(previousMonth);
-      done();
-    });
-
-    const previousMonthButton = fixture.debugElement.queryAll(By.css('.btn-previous-month'));
-    expect(previousMonthButton.length).toBe(1);
-
-    previousMonthButton[0].triggerEventHandler('click', null);
+    timePickerInput[0].triggerEventHandler('click', null);
     fixture.detectChanges();
 
-    expect(component.currentMonth).toBe(previousMonth);
-    expect(component.year).toBe(previousYear);
-    expect(component.monthChanged.emit).toHaveBeenCalled();
+    const timeElement = fixture.debugElement.queryAll(By.css('ngx-time'));
+    expect(timeElement.length).toBe(1);
   });
 
-  it('should go to next month', done => {
-    const nextMonth = moment()
-      .add(1, 'months')
-      .month();
-    const nextYear = moment()
-      .add(1, 'months')
-      .year();
-    spyOn(component.monthChanged, 'emit').and.callThrough();
-    component.monthChanged.subscribe((selectedDate: Date) => {
-      expect(selectedDate.getFullYear()).toBe(nextYear);
-      expect(selectedDate.getMonth()).toBe(nextMonth);
-      done();
-    });
+  it('should show a time when the user selects the date', () => {
+    component.showTimePicker = false;
+    component.onDayMonthSelected(
+      moment()
+        .date(28)
+        .toDate()
+    );
 
-    const nextMonthButton = fixture.debugElement.queryAll(By.css('.btn-next-month'));
-    expect(nextMonthButton.length).toBe(1);
-
-    nextMonthButton[0].triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    expect(component.currentMonth).toBe(nextMonth);
-    expect(component.year).toBe(nextYear);
-    expect(component.monthChanged.emit).toHaveBeenCalled();
+    expect(component.showTimePicker).toBe(true);
   });
 
   it('should give time unavailabilities when a day-month is picked', () => {
