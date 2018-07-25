@@ -29,6 +29,7 @@ describe('MonthComponent', () => {
     const unavailabilityToUse: DateTimeRange[] = [
       { start: new Date(2018, 6, 1), end: new Date(2018, 6, 10) }
     ];
+    component.selectedDate = new Date(2018, 6, 1);
     component.unavailability = unavailabilityToUse;
   });
 
@@ -151,6 +152,22 @@ describe('MonthComponent', () => {
     const daysUnavailable = fixture.debugElement.queryAll(By.css('.unavailable'));
 
     expect(daysUnavailable.length).toBe(8);
+  });
+
+  it('should know when a day is selected', () => {
+    const monthToUse = 6;
+    const yearToUse = 2020;
+    const selectedDate = new Date(2020, 6, 21);
+    const unavailabilityToUse: DateTimeRange[] = [];
+
+    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.unavailability = unavailabilityToUse;
+    component.selectedDate = selectedDate;
+    fixture.detectChanges();
+
+    const daysSelected = fixture.debugElement.queryAll(By.css('.selected'));
+
+    expect(daysSelected.length).toBe(1);
   });
 
   it('should make days unavailable from the first unavailability after the previous selection and before the previous selection', () => {
