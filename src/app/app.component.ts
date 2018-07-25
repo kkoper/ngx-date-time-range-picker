@@ -7,6 +7,7 @@ import { DateTimeRange } from 'date-time-range-picker';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  startFrom = new Date(2019, 1, 1);
   unavailability: DateTimeRange[][] = [
     [
       { start: new Date(2019, 0, 14, 10, 0), end: new Date(2019, 0, 14, 21, 0) },
@@ -24,14 +25,26 @@ export class AppComponent implements OnInit {
     ],
     [
       { start: new Date(2019, 4, 14, 10, 0), end: new Date(2019, 4, 14, 21, 0) },
-      { start: new Date(2019, 4, 16, 10, 0), end: new Date(2019, 4, 18, 18, 0) },
-      { start: new Date(2019, 4, 18, 10, 0), end: new Date(2019, 4, 21, 21, 0) }
+      { start: new Date(2019, 4, 16, 10, 0), end: new Date(2019, 4, 18, 18, 0) }
     ],
-    [],
-    [],
-    [],
-    [],
-    [],
+    [{ start: new Date(2019, 5, 26, 16, 0), end: new Date(2019, 5, 26, 18, 0) }],
+    [
+      { start: new Date(2019, 6, 26, 16, 0), end: new Date(2019, 6, 26, 18, 0) },
+      { start: new Date(2019, 6, 26, 23, 0), end: new Date(2019, 6, 27, 11, 0) }
+    ],
+    [
+      { start: new Date(2019, 7, 14, 10, 0), end: new Date(2019, 7, 14, 21, 0) },
+      { start: new Date(2019, 7, 16, 10, 0), end: new Date(2019, 7, 18, 18, 0) }
+    ],
+    [
+      { start: new Date(2019, 8, 14, 10, 0), end: new Date(2019, 8, 14, 21, 0) },
+      { start: new Date(2019, 8, 26, 16, 0), end: new Date(2019, 8, 26, 18, 0) },
+      { start: new Date(2019, 8, 26, 23, 0), end: new Date(2019, 8, 27, 11, 0) }
+    ],
+    [
+      { start: new Date(2019, 9, 14, 10, 0), end: new Date(2019, 9, 14, 21, 0) },
+      { start: new Date(2019, 9, 26, 23, 0), end: new Date(2019, 9, 27, 11, 0) }
+    ],
     [],
     [],
     [],

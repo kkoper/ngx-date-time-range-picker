@@ -19,11 +19,12 @@ const moment = moment_;
 })
 export class DateTimeComponent implements OnInit {
   @Input() monthUnavailabilities: DateTimeRange[] = [];
+  @Input() startFrom: Date;
   @Output() monthChanged = new EventEmitter<Date>();
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   activeMoment: moment_.Moment = moment();
-  selectedDate = moment().toDate();
+  selectedDate: Date;
   showDatePicker: boolean;
   showTimePicker: boolean;
   dateSelected: boolean;
@@ -34,7 +35,9 @@ export class DateTimeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectedDate = this.startFrom ? this.startFrom : moment().toDate();
+  }
 
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);

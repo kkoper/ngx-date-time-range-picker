@@ -11,12 +11,27 @@
 
 .partial {
   color: lime;
+  &:hover {
+    background: cornflowerblue;
+  }
 }
 
 .hover {
   background: lightskyblue;
+  &:hover {
+    background: cornflowerblue;
+  }
 }
 
 .selected {
   background: orange;
+  &:hover {
+    background: cornflowerblue;
+  }
+}
+
+.available {
+  &:hover {
+    background: cornflowerblue;
+  }
 }

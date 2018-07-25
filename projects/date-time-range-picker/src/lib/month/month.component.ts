@@ -175,17 +175,17 @@ export class MonthComponent implements OnInit, OnChanges {
       previousEndDate = moment(block.end);
 
       if (this.hoverFrom && block.start > this.hoverFrom) {
-        this.markRestOfTheDaysAsFull(block, endFullDayNumber);
+        this.markRestOfTheDaysAsFull(startFullDayNumber);
         break;
       }
     }
   }
 
-  private markRestOfTheDaysAsFull(block: DateTimeRange, start: number) {
-    const endOfMonthDay = moment(block.end)
+  private markRestOfTheDaysAsFull(start: number) {
+    const endOfMonthDay = moment(this.activeMoment)
       .endOf('month')
       .date();
-    this.addFullDays(start, endOfMonthDay + 1);
+    this.addFullDays(start + 1, endOfMonthDay + 1);
   }
 
   private addFullDays(start: number, end: number) {
@@ -202,7 +202,9 @@ export class MonthComponent implements OnInit, OnChanges {
 
   private makeDaysBeforePreselectionUnavailable() {
     if (this.hoverFrom) {
-      if (this.isPreselectionInSameMonth()) {
+      if (this.isPreselectionInFutureMonth()) {
+        this.makeAllDaysOfTheMonthFull();
+      } else if (this.isPreselectionInSameMonth()) {
         const preselectionDay = moment(this.hoverFrom).date();
         this.addFullDays(1, preselectionDay);
         this.partialDays.push(preselectionDay);
@@ -228,6 +230,10 @@ export class MonthComponent implements OnInit, OnChanges {
 
   private isPreselectionInSameMonth() {
     return moment(this.hoverFrom).isSame(this.activeMoment, 'month');
+  }
+
+  private isPreselectionInFutureMonth() {
+    return moment(this.hoverFrom).isAfter(this.activeMoment, 'month');
   }
 
   private makeAllDaysOfTheMonthFree() {

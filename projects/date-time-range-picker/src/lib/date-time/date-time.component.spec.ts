@@ -30,6 +30,13 @@ describe('DateTimeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should select the start date by default', () => {
+    component.startFrom = new Date(2020, 1, 1);
+    component.ngOnInit();
+
+    expect(component.selectedDate).toBe(component.startFrom);
+  });
+
   it('should not show a month by default', () => {
     const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
 
