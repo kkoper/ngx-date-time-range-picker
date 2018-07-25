@@ -23,7 +23,7 @@ export class DateTimeComponent implements OnInit {
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   activeMoment: moment_.Moment = moment();
-  selectedDate = this.activeMoment.toDate();
+  selectedDate = moment().toDate();
   showDatePicker: boolean;
   showTimePicker: boolean;
   dateSelected: boolean;
@@ -39,6 +39,7 @@ export class DateTimeComponent implements OnInit {
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
     this.activeMoment = moment(selectedDate);
+    this.selectedDate = selectedDate;
     this.dateSelected = true;
     this.showDatePicker = false;
     this.showTimePicker = true;
@@ -50,12 +51,14 @@ export class DateTimeComponent implements OnInit {
       .hour(selectedTime.hours)
       .minute(selectedTime.minutes)
       .startOf('minute');
-    this.dateTimeSelected.emit(this.activeMoment.toDate());
+    this.selectedDate = this.activeMoment.toDate();
+    this.dateTimeSelected.emit(this.selectedDate);
     this.showTimePicker = false;
     this.timeSelected = true;
   }
 
   onMonthChanged(date: Date): void {
+    this.activeMoment = moment(date);
     this.monthChanged.emit(date);
   }
 

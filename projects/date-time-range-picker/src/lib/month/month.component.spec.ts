@@ -8,7 +8,7 @@ import { MonthComponent } from './month.component';
 
 const moment = moment_;
 
-describe('MonthComponent', () => {
+fdescribe('MonthComponent', () => {
   let component: MonthComponent;
   let fixture: ComponentFixture<MonthComponent>;
 
@@ -26,10 +26,10 @@ describe('MonthComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MonthComponent);
     component = fixture.componentInstance;
-    const unavailabilityToUse: DateTimeRange[] = [
-      { start: new Date(2018, 6, 1), end: new Date(2018, 6, 10) }
-    ];
-    component.selectedDate = new Date(2018, 6, 1);
+    const monthToUse = 6;
+    const yearToUse = 2018;
+    const unavailabilityToUse: DateTimeRange[] = [];
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.unavailability = unavailabilityToUse;
   });
 
@@ -48,10 +48,6 @@ describe('MonthComponent', () => {
     });
   });
 
-  it('should have the current year and month as a default selection', () => {
-    expect(component.activeMoment.isSame(moment(), 'day')).toBe(true);
-  });
-
   it('should show the current month and year', () => {
     component.ngOnInit();
     fixture.detectChanges();
@@ -62,11 +58,8 @@ describe('MonthComponent', () => {
   });
 
   it('should have the correct number of dummy days before', () => {
-    const monthToUse = 6;
-    const yearToUse = 2018;
-    const expectedDaysBefore = 6;
-    component.activeMoment.year(yearToUse).month(monthToUse);
     fixture.detectChanges();
+    const expectedDaysBefore = 6;
 
     const daysBefore = fixture.debugElement.queryAll(By.css('.day-before'));
 
@@ -74,10 +67,8 @@ describe('MonthComponent', () => {
   });
 
   it('should have the correct number of dummy days after', () => {
-    const monthToUse = 6;
-    const yearToUse = 2018;
     const expectedDaysAfter = 5;
-    component.activeMoment.year(yearToUse).month(monthToUse);
+
     fixture.detectChanges();
 
     const daysBefore = fixture.debugElement.queryAll(By.css('.day-after'));
@@ -89,7 +80,7 @@ describe('MonthComponent', () => {
     const monthToUse = 6;
     const yearToUse = 2020;
     const hoverToUse = new Date(2020, 6, 4);
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.hoverFrom = hoverToUse;
     component.unavailability = [];
     fixture.detectChanges();
@@ -112,7 +103,7 @@ describe('MonthComponent', () => {
         end: new Date(2020, 6, 10)
       }
     ];
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.hoverFrom = hoverToUse;
     component.unavailability = unavailabilityToUse;
     fixture.detectChanges();
@@ -129,7 +120,7 @@ describe('MonthComponent', () => {
     const unavailabilityToUse: DateTimeRange[] = [
       { start: new Date(2020, 6, 1, 10, 0), end: new Date(2020, 6, 1, 15, 0) }
     ];
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.hoverFrom = hoverToUse;
     component.unavailability = unavailabilityToUse;
     fixture.detectChanges();
@@ -145,7 +136,7 @@ describe('MonthComponent', () => {
     const unavailabilityToUse: DateTimeRange[] = [
       { start: new Date(2020, 6, 1, 14, 0), end: new Date(2020, 6, 10, 21, 0) }
     ];
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.unavailability = unavailabilityToUse;
     fixture.detectChanges();
 
@@ -160,7 +151,7 @@ describe('MonthComponent', () => {
     const selectedDate = new Date(2020, 6, 21);
     const unavailabilityToUse: DateTimeRange[] = [];
 
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.unavailability = unavailabilityToUse;
     component.selectedDate = selectedDate;
     fixture.detectChanges();
@@ -178,7 +169,7 @@ describe('MonthComponent', () => {
       { start: new Date(2020, 6, 7, 14, 0), end: new Date(2020, 6, 10, 21, 0) }
     ];
     const hoverToUse = new Date(2020, 6, 4);
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    component.selectedDate = new Date(yearToUse, monthToUse, 4);
     component.unavailability = unavailabilityToUse;
     component.hoverFrom = hoverToUse;
     fixture.detectChanges();
@@ -189,12 +180,13 @@ describe('MonthComponent', () => {
   });
 
   it('should go to previous month', done => {
-    const previousMonth = moment()
-      .subtract(1, 'months')
-      .month();
-    const previousYear = moment()
-      .subtract(1, 'months')
-      .year();
+    const monthToUse = 6;
+    const yearToUse = 2020;
+    const previousMonth = 5;
+    const previousYear = 2020;
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
+
+    fixture.detectChanges();
     spyOn(component.monthChanged, 'emit').and.callThrough();
     component.monthChanged.subscribe((selectedDate: Date) => {
       expect(selectedDate.getFullYear()).toBe(previousYear);
@@ -208,18 +200,19 @@ describe('MonthComponent', () => {
     previousMonthButton[0].triggerEventHandler('click', null);
     fixture.detectChanges();
 
-    expect(component.activeMoment.month()).toBe(previousMonth);
-    expect(component.year).toBe(previousYear);
     expect(component.monthChanged.emit).toHaveBeenCalled();
   });
 
   it('should go to next month', done => {
-    const nextMonth = moment()
-      .add(1, 'months')
-      .month();
-    const nextYear = moment()
-      .add(1, 'months')
-      .year();
+    const monthToUse = 6;
+    const yearToUse = 2020;
+    const nextMonth = 7;
+    const nextYear = 2020;
+    const unavailabilityToUse: DateTimeRange[] = [];
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
+    component.unavailability = unavailabilityToUse;
+
+    fixture.detectChanges();
     spyOn(component.monthChanged, 'emit').and.callThrough();
     component.monthChanged.subscribe((selectedDate: Date) => {
       expect(selectedDate.getFullYear()).toBe(nextYear);
@@ -233,8 +226,6 @@ describe('MonthComponent', () => {
     nextMonthButton[0].triggerEventHandler('click', null);
     fixture.detectChanges();
 
-    expect(component.activeMoment.month()).toBe(nextMonth);
-    expect(component.year).toBe(nextYear);
     expect(component.monthChanged.emit).toHaveBeenCalled();
   });
 
@@ -242,10 +233,8 @@ describe('MonthComponent', () => {
     const monthToUse = 8;
     const yearToUse = 2018;
     const dayToSelect = 12;
-    const unavailabilityToUse: DateTimeRange[] = [
-      { start: new Date(2018, 8, 1, 14, 0), end: new Date(2018, 8, 10, 21, 0) }
-    ];
-    component.activeMoment.year(yearToUse).month(monthToUse);
+    const unavailabilityToUse: DateTimeRange[] = [];
+    component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.unavailability = unavailabilityToUse;
     fixture.detectChanges();
 

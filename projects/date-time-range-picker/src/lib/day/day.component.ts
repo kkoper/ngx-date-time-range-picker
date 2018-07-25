@@ -49,7 +49,9 @@ export class DayComponent implements OnInit {
   hoverOut(): void {}
 
   onDaySelected(): void {
-    this.selectDay.emit(this.value);
+    if (this.status !== DayState.Full) {
+      this.selectDay.emit(this.value);
+    }
   }
 
   private isDayHoverable(): boolean {
