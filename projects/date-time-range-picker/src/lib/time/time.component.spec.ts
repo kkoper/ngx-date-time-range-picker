@@ -112,7 +112,7 @@ describe('TimeComponent', () => {
       expect(component.compareFn(t1, t2)).toBe(true);
     });
 
-    it('should be true if the hour and the minute are equal but the isBlocked is different', () => {
+    it('should be false if the hour and the minute are equal but the one segment is blocked', () => {
       const t1: TimeSegment = {
         hour: 23,
         minute: 30,
@@ -124,7 +124,7 @@ describe('TimeComponent', () => {
         isBlocked: true
       };
 
-      expect(component.compareFn(t1, t2)).toBe(true);
+      expect(component.compareFn(t1, t2)).toBe(false);
     });
 
     it('should be false if the hour is equal but the minute is different', () => {

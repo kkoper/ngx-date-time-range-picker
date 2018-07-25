@@ -50,6 +50,16 @@ describe('DayComponent', () => {
       expect(element.classList.contains('unavailable')).toBe(true);
       expect(element.classList.contains('available')).toBe(false);
     });
+    it('should be shown as selected if the day is selected', () => {
+      component.status = DayState.Selected;
+      fixture.detectChanges();
+
+      const element = fixture.debugElement.query(By.css('.day-block')).nativeElement;
+      expect(element.classList.contains('partial')).toBe(false);
+      expect(element.classList.contains('selected')).toBe(true);
+      expect(element.classList.contains('unavailable')).toBe(false);
+      expect(element.classList.contains('available')).toBe(false);
+    });
     it('should be shown as available if the day is free', () => {
       component.status = DayState.Free;
       fixture.detectChanges();
@@ -137,6 +147,19 @@ describe('DayComponent', () => {
       element.triggerEventHandler('click', null);
 
       expect(component.selectDay.emit).toHaveBeenCalled();
+    });
+
+    it('should not emit a day selected event if the user clicks on an full day', () => {
+      const dayNumber = 31;
+      component.value = dayNumber;
+      component.status = DayState.Full;
+      spyOn(component.selectDay, 'emit').and.callThrough();
+      fixture.detectChanges();
+
+      const element = fixture.debugElement.query(By.css('.day-block'));
+      element.triggerEventHandler('click', null);
+
+      expect(component.selectDay.emit).not.toHaveBeenCalled();
     });
   });
 });

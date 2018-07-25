@@ -59,7 +59,9 @@ export class TimeComponent implements OnInit, OnChanges {
   }
 
   compareFn(t1: TimeSegment, t2: TimeSegment): boolean {
-    return t1 && t2 && t1.hour === t2.hour && t1.minute === t2.minute;
+    return (
+      t1 && t2 && t1.hour === t2.hour && t1.minute === t2.minute && !t1.isBlocked && !t2.isBlocked
+    );
   }
 
   private applyUnavailabilities(): void {

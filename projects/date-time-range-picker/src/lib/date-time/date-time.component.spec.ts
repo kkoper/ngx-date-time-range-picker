@@ -98,6 +98,17 @@ describe('DateTimeComponent', () => {
     expect(component.timeUnavailabilities).toEqual(expectedTimeUnavailability);
   });
 
+  it('should remember the selected date', () => {
+    component.monthUnavailabilities = [];
+    const dateToSelect = new Date(2019, 11, 26);
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    component.onDayMonthSelected(dateToSelect);
+
+    expect(component.activeMoment).toEqual(moment(dateToSelect));
+  });
+
   it('should emit a date-time when a time is picked', done => {
     spyOn(component.dateTimeSelected, 'emit').and.callThrough();
     component.dateTimeSelected.subscribe((selectedDate: Date) => {
