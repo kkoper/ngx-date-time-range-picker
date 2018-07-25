@@ -23,6 +23,7 @@ export class DateTimeComponent implements OnInit {
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   activeMoment: moment_.Moment = moment();
+  selectedDate = this.activeMoment.toDate();
   showDatePicker: boolean;
   showTimePicker: boolean;
   dateSelected: boolean;
@@ -30,9 +31,6 @@ export class DateTimeComponent implements OnInit {
 
   // Time component needs:
   timeUnavailabilities: DateTimeRange[] = [];
-  get selectedDate(): Date {
-    return this.activeMoment.toDate();
-  }
 
   constructor() {}
 

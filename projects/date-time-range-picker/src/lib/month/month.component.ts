@@ -21,6 +21,7 @@ const moment = moment_;
 })
 export class MonthComponent implements OnInit, OnChanges {
   @Input() unavailability: DateTimeRange[];
+  @Input() selectedDate: Date = moment().toDate();
   @Input() hoverFrom: Date;
   @Output() dateSelected = new EventEmitter<Date>();
   @Output() monthChanged = new EventEmitter<Date>();
@@ -30,7 +31,8 @@ export class MonthComponent implements OnInit, OnChanges {
   private freeDays: number[];
   private partialDays: number[];
   private fullDays: number[];
-  activeMoment: moment_.Moment = moment();
+
+  activeMoment: moment_.Moment = moment(this.selectedDate);
 
   // Computed values:
   get monthName(): string {
@@ -110,6 +112,19 @@ export class MonthComponent implements OnInit, OnChanges {
       const newDay: Day = { value: i + 1, status: dayStatus, hovered: false };
 
       this.days.push(newDay);
+    }
+
+    this.markSelectedDate();
+  }
+
+  private markSelectedDate() {
+    if (this.activeMoment.isSame(moment(this.selectedDate), 'month')) {
+      this.days = this.days.map(day => {
+        if (day.value === this.selectedDate.getDate()) {
+          day.status = DayState.Selected;
+        }
+        return day;
+      });
     }
   }
 
