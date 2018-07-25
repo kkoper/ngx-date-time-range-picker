@@ -12,14 +12,14 @@
 .partial {
   color: lime;
   &:hover {
-    background: cornflowerblue;
+    background: orange;
   }
 }
 
 .hover {
   background: lightskyblue;
   &:hover {
-    background: cornflowerblue;
+    background: orange;
   }
 }
 
@@ -32,6 +32,6 @@
 
 .available {
   &:hover {
-    background: cornflowerblue;
+    background: orange;
   }
 }
