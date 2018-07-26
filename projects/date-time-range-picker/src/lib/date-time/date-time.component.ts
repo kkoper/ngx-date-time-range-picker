@@ -20,11 +20,11 @@ const moment = moment_;
 export class DateTimeComponent implements OnInit {
   @Input() monthUnavailabilities: DateTimeRange[] = [];
   @Input() startFrom: Date;
+  @Input() selectedDate: Date;
   @Output() monthChanged = new EventEmitter<Date>();
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
   activeMoment: moment_.Moment = moment();
-  selectedDate: Date;
   showDatePicker: boolean;
   showTimePicker: boolean;
   dateSelected: boolean;
@@ -35,9 +35,7 @@ export class DateTimeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.selectedDate = this.startFrom ? this.startFrom : moment().toDate();
-  }
+  ngOnInit() {}
 
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
@@ -94,6 +92,11 @@ export class DateTimeComponent implements OnInit {
     if (selectedDay.isSame(now, 'day')) {
       const startMoment = moment().startOf('day');
       const endMoment = moment().add(30, 'minutes');
+      newTimeUnavailabilities.push({ start: startMoment.toDate(), end: endMoment.toDate() });
+    }
+    if (selectedDay.isSame(this.startFrom, 'day')) {
+      const startMoment = moment(this.startFrom).startOf('day');
+      const endMoment = moment(this.startFrom).add(30, 'minutes');
       newTimeUnavailabilities.push({ start: startMoment.toDate(), end: endMoment.toDate() });
     }
 

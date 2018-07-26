@@ -23,18 +23,12 @@ describe('DateTimeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DateTimeComponent);
     component = fixture.componentInstance;
+    component.selectedDate = new Date(2020, 1, 1);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should select the start date by default', () => {
-    component.startFrom = new Date(2020, 1, 1);
-    component.ngOnInit();
-
-    expect(component.selectedDate).toBe(component.startFrom);
   });
 
   it('should not show a month by default', () => {
