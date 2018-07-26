@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { DateTimeRangePickerComponent } from './date-time-range-picker.component';
+import { DateTimeComponent } from './date-time/date-time.component';
+import { DayComponent } from './day/day.component';
+import { MonthComponent } from './month/month.component';
+import { TimeComponent } from './time/time.component';
 
 describe('DateTimeRangePickerComponent', () => {
   let component: DateTimeRangePickerComponent;
@@ -8,9 +12,15 @@ describe('DateTimeRangePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateTimeRangePickerComponent ]
-    })
-    .compileComponents();
+      imports: [FormsModule],
+      declarations: [
+        DateTimeComponent,
+        MonthComponent,
+        DayComponent,
+        TimeComponent,
+        DateTimeRangePickerComponent
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
