@@ -169,8 +169,16 @@ export class MonthComponent implements OnInit, OnChanges {
       const endFullDayNumber = moment(block.end).date();
 
       this.addFreeDays(startFreeDayNumber, endFreeDayNumber);
-      this.partialDays.push(startFullDayNumber);
-      this.partialDays.push(endFullDayNumber);
+      if (block.start.getHours() === 0 && block.start.getMinutes() <= 30) {
+        this.fullDays.push(startFullDayNumber);
+      } else {
+        this.partialDays.push(startFullDayNumber);
+      }
+      if (block.end.getHours() === 23 && block.end.getMinutes() >= 30) {
+        this.fullDays.push(endFullDayNumber);
+      } else {
+        this.partialDays.push(endFullDayNumber);
+      }
       this.addFullDays(startFullDayNumber + 1, endFullDayNumber);
       previousEndDate = moment(block.end);
 

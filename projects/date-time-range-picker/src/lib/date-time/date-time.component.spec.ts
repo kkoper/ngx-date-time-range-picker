@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -17,12 +18,17 @@ describe('DateTimeComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
       declarations: [DateTimeComponent, MonthComponent, DayComponent, TimeComponent]
-    }).compileComponents();
+    })
+      .overrideComponent(DateTimeComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DateTimeComponent);
     component = fixture.componentInstance;
+    component.selectedDate = new Date(2020, 1, 1);
     fixture.detectChanges();
   });
 
@@ -30,17 +36,29 @@ describe('DateTimeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should select the start date by default', () => {
-    component.startFrom = new Date(2020, 1, 1);
-    component.ngOnInit();
-
-    expect(component.selectedDate).toBe(component.startFrom);
-  });
-
   it('should not show a month by default', () => {
     const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
 
     expect(monthElement.length).toBe(0);
+  });
+
+  it('should show a month if the parent component says so', () => {
+    component.isOpen = true;
+    fixture.detectChanges();
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
+    expect(monthElement.length).toBe(1);
+  });
+
+  it('should not be disabled by default', () => {
+    const disabledInputs = fixture.debugElement.queryAll(By.css('#datePicker[disabled]'));
+    expect(disabledInputs.length).toBe(0);
+  });
+
+  it('should be disabled if the parent component says so', () => {
+    component.isDisabled = true;
+    fixture.detectChanges();
+    const disabledInputs = fixture.debugElement.queryAll(By.css('#datePicker[disabled]'));
+    expect(disabledInputs.length).toBe(1);
   });
 
   it('should show a month when the user clicks the input', () => {

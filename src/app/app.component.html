@@ -1,2 +1,1 @@
-<ngx-date-time [monthUnavailabilities]='monthUnavailability' [startFrom]='startFrom' (monthChanged)='onMonthChanged($event)'
-    (dateTimeSelected)='onDateTimeSelected($event)'></ngx-date-time>
+<ngx-date-time-range-picker (dateTimeRangeSelected)='onDateTimeRangeSelected($event)' [getMonthUnavailability]='onGetMonthUnavailability'></ngx-date-time-range-picker>

@@ -1,0 +1,6 @@
+From:
+<ngx-date-time [monthUnavailabilities]='startMonthUnavailability' [selectedDate]='selectedStart' (monthChanged)='onStartMonthChanged($event)'
+    (dateTimeSelected)='onDateTimeFromSelected($event)' [isOpen]='openStart' [isDisabled]='disabledStart'></ngx-date-time>
+To:
+<ngx-date-time [monthUnavailabilities]='endMonthUnavailability' [selectedDate]='selectedEnd' [startFrom]='selectedStart'
+    (monthChanged)='onEndMonthChanged($event)' (dateTimeSelected)='onDateTimeUntilSelected($event)' [isOpen]='openEnd' [isDisabled]='disabledEnd'></ngx-date-time>
