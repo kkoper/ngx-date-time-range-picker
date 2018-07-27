@@ -96,11 +96,9 @@ export class DateTimeRangePickerComponent implements OnInit {
     }
 
     if (isDateAfterSelectedStart) {
-      console.log('date is after selected start');
       if (blockEverything) {
         unavailabilityToUse = this.getFullMonthUnavailability(date);
       } else {
-        console.log('do not block everything');
         const filteredUnavailabilities = [];
         for (const unavailability of unavailabilityToUse) {
           if (moment(unavailability.start).isAfter(moment(this.selectedStart, 'minute'))) {
@@ -108,18 +106,15 @@ export class DateTimeRangePickerComponent implements OnInit {
               this.getUnavailabilityUntilTheEndOfTheMonth(unavailability.start)
             );
             this.startOfBlockEveryting = unavailability.start;
-            console.log('block from', unavailability.start);
             break;
           } else {
             filteredUnavailabilities.push(unavailability);
           }
         }
-        console.log('reassing unavailabilities', filteredUnavailabilities);
         unavailabilityToUse = [...filteredUnavailabilities];
       }
     }
     this.endMonthUnavailability = [...unavailabilityToUse];
-    console.log('unavailability to use', this.endMonthUnavailability);
   }
 
   private getUnavailabilityUntilTheEndOfTheMonth(start: Date): DateTimeRange {
