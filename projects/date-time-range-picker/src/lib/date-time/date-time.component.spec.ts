@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -17,7 +18,11 @@ describe('DateTimeComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
       declarations: [DateTimeComponent, MonthComponent, DayComponent, TimeComponent]
-    }).compileComponents();
+    })
+      .overrideComponent(DateTimeComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -35,6 +40,25 @@ describe('DateTimeComponent', () => {
     const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
 
     expect(monthElement.length).toBe(0);
+  });
+
+  it('should show a month if the parent component says so', () => {
+    component.isOpen = true;
+    fixture.detectChanges();
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
+    expect(monthElement.length).toBe(1);
+  });
+
+  it('should not be disabled by default', () => {
+    const disabledInputs = fixture.debugElement.queryAll(By.css('#datePicker[disabled]'));
+    expect(disabledInputs.length).toBe(0);
+  });
+
+  it('should be disabled if the parent component says so', () => {
+    component.isDisabled = true;
+    fixture.detectChanges();
+    const disabledInputs = fixture.debugElement.queryAll(By.css('#datePicker[disabled]'));
+    expect(disabledInputs.length).toBe(1);
   });
 
   it('should show a month when the user clicks the input', () => {
