@@ -3,9 +3,9 @@
 </div>
 
 <div class="month-header">
-  <button class='btn-previous-month' (click)='goToPreviousMonth()'>Previous</button>
-  <div>{{monthName}}</div>
-  <button class='btn-next-month' (click)='goToNextMonth()'>Next</button>
+  <span class='btn btn-previous-month' (click)='goToPreviousMonth()'>⬅️</span>
+  <div class='month-name'>{{monthName}}</div>
+  <span class='btn btn-next-month' (click)='goToNextMonth()'>➡️</span>
 </div>
 
 <div class="month-grid">

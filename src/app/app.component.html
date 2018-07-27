@@ -1,1 +1,8 @@
-<ngx-date-time-range-picker (dateTimeRangeSelected)='onDateTimeRangeSelected($event)' [getMonthUnavailability]='onGetMonthUnavailability'></ngx-date-time-range-picker>
+<ngx-date-time-range-picker [selectedStart]='defaultStartDate' [selectedEnd]='defaultEndDate' (dateTimeRangeSelected)='onDateTimeRangeSelected($event)'
+    [getMonthUnavailability]='onGetMonthUnavailability'></ngx-date-time-range-picker>
+
+<div *ngIf='startDate && endDate' class='results'>
+    🎉 Congrats! Your booking is from
+    <strong>{{startDate | date:'MMM d, y, h:mm a'}}</strong> until
+    <strong>{{endDate | date:'MMM d, y, h:mm a'}}</strong> 🎉
+</div>

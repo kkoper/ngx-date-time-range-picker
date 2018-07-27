@@ -7,14 +7,30 @@
     display: flex;
     flex-direction: column;
 
+    &.time-container {
+      width: 150px;
+    }
+
     input {
-      padding: 8px;
+      padding: 12px;
+      border: 1px solid cornflowerblue;
+      color: mediumslateblue;
+      font-weight: 700;
+
+      &:focus {
+        outline: none;
+      }
+
+      &.focused {
+        border: 1px solid orange;
+        color: orangered;
+      }
     }
 
     ngx-month {
       padding: 4px;
       margin-top: 10px;
-      border: 1px solid black;
+      border: 1px solid orange;
     }
 
     ngx-time {
