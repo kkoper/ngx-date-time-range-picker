@@ -15,6 +15,10 @@ export class DateTimeRangePickerComponent implements OnInit {
 
   startMonthUnavailability: DateTimeRange[];
   endMonthUnavailability: DateTimeRange[];
+  openStart = false;
+  openEnd = false;
+  disabledStart = false;
+  disabledEnd = true;
 
   private startOfBlockEveryting: Date;
   private unavailability: DateTimeRange[][] = [
@@ -72,11 +76,16 @@ export class DateTimeRangePickerComponent implements OnInit {
       .add(30, 'minutes')
       .toDate();
     this.selectedEnd = firstPossibleEndDate;
+    this.disabledEnd = false;
+    this.openEnd = true;
+    this.openStart = false;
+    this.startOfBlockEveryting = null;
     this.evaluateEndMonthUnavailability(firstPossibleEndDate);
   }
 
   onDateTimeUntilSelected(date: Date) {
     this.selectedEnd = date;
+    this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
   }
 
   onStartMonthChanged(date: Date) {

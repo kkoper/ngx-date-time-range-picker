@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DateTimeRange } from 'date-time-range-picker/public_api';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   ngOnInit() {}
+
+  onDateTimeRangeSelected(range: DateTimeRange) {
+    console.log(`From ${range.start} until ${range.end}`);
+  }
 }

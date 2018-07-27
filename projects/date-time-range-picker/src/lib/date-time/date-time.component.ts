@@ -21,6 +21,11 @@ export class DateTimeComponent implements OnInit {
   @Input() monthUnavailabilities: DateTimeRange[] = [];
   @Input() startFrom: Date;
   @Input() selectedDate: Date;
+  @Input() isDisabled: boolean;
+  @Input()
+  set isOpen(value: boolean) {
+    this.showDatePicker = value;
+  }
   @Output() monthChanged = new EventEmitter<Date>();
   @Output() dateTimeSelected = new EventEmitter<Date>();
 
