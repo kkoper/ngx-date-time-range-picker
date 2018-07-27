@@ -11,6 +11,7 @@ const moment = moment_;
 export class DateTimeRangePickerComponent implements OnInit {
   @Input() selectedStart: Date = moment().toDate();
   @Input() selectedEnd: Date = moment().toDate();
+  @Input() getMonthUnavailability: (date: Date) => DateTimeRange[];
   @Output() dateTimeRangeSelected = new EventEmitter<DateTimeRange>();
 
   startMonthUnavailability: DateTimeRange[];
@@ -21,52 +22,10 @@ export class DateTimeRangePickerComponent implements OnInit {
   disabledEnd = true;
 
   private startOfBlockEveryting: Date;
-  private unavailability: DateTimeRange[][] = [
-    [
-      { start: new Date(2019, 0, 14, 10, 0), end: new Date(2019, 0, 14, 21, 0) },
-      { start: new Date(2019, 0, 16, 10, 0), end: new Date(2019, 0, 18, 18, 0) },
-      { start: new Date(2019, 0, 26, 16, 0), end: new Date(2019, 0, 26, 18, 0) },
-      { start: new Date(2019, 0, 26, 23, 0), end: new Date(2019, 0, 27, 11, 0) }
-    ],
-    [{ start: new Date(2019, 1, 26, 23, 0), end: new Date(2019, 1, 27, 11, 0) }],
-    [{ start: new Date(2019, 2, 26, 23, 0), end: new Date(2019, 2, 27, 11, 0) }],
-    [
-      { start: new Date(2019, 3, 18, 10, 0), end: new Date(2019, 3, 21, 21, 0) },
-      { start: new Date(2019, 3, 25, 10, 0), end: new Date(2019, 3, 26, 11, 0) },
-      { start: new Date(2019, 3, 26, 16, 0), end: new Date(2019, 3, 26, 18, 0) },
-      { start: new Date(2019, 3, 26, 23, 0), end: new Date(2019, 3, 27, 11, 0) }
-    ],
-    [
-      { start: new Date(2019, 4, 14, 10, 0), end: new Date(2019, 4, 14, 21, 0) },
-      { start: new Date(2019, 4, 16, 10, 0), end: new Date(2019, 4, 18, 18, 0) }
-    ],
-    [{ start: new Date(2019, 5, 26, 16, 0), end: new Date(2019, 5, 26, 18, 0) }],
-    [
-      { start: new Date(2019, 6, 26, 16, 0), end: new Date(2019, 6, 26, 18, 0) },
-      { start: new Date(2019, 6, 26, 23, 0), end: new Date(2019, 6, 27, 11, 0) }
-    ],
-    [
-      { start: new Date(2019, 7, 14, 10, 0), end: new Date(2019, 7, 14, 21, 0) },
-      { start: new Date(2019, 7, 16, 10, 0), end: new Date(2019, 7, 18, 18, 0) }
-    ],
-    [
-      { start: new Date(2019, 8, 14, 10, 0), end: new Date(2019, 8, 14, 21, 0) },
-      { start: new Date(2019, 8, 26, 16, 0), end: new Date(2019, 8, 26, 18, 0) },
-      { start: new Date(2019, 8, 26, 23, 0), end: new Date(2019, 8, 27, 11, 0) }
-    ],
-    [{ start: new Date(2019, 9, 14, 10, 0), end: new Date(2019, 9, 14, 21, 0) }],
-    [{ start: new Date(2019, 9, 26, 23, 0), end: new Date(2019, 9, 27, 11, 0) }],
-    [
-      { start: new Date(2019, 9, 14, 10, 0), end: new Date(2019, 9, 14, 21, 0) },
-      { start: new Date(2019, 9, 26, 23, 0), end: new Date(2019, 9, 27, 11, 0) }
-    ],
-    []
-  ];
-
   constructor() {}
 
   ngOnInit() {
-    this.startMonthUnavailability = this.unavailability[this.selectedStart.getMonth() - 1];
+    this.startMonthUnavailability = this.getMonthUnavailability(this.selectedStart);
     this.evaluateEndMonthUnavailability(this.selectedEnd);
   }
 
@@ -85,11 +44,12 @@ export class DateTimeRangePickerComponent implements OnInit {
 
   onDateTimeUntilSelected(date: Date) {
     this.selectedEnd = date;
+    this.openEnd = false;
     this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
   }
 
   onStartMonthChanged(date: Date) {
-    this.startMonthUnavailability = this.unavailability[date.getMonth()];
+    this.startMonthUnavailability = this.getMonthUnavailability(date);
   }
 
   onEndMonthChanged(date: Date) {
@@ -97,7 +57,7 @@ export class DateTimeRangePickerComponent implements OnInit {
   }
 
   private evaluateEndMonthUnavailability(date: Date) {
-    let unavailabilityToUse = [...this.unavailability[date.getMonth()]];
+    let unavailabilityToUse = this.getMonthUnavailability(date);
     const isDateAfterSelectedStart = moment(date).isAfter(moment(this.selectedStart), 'minute');
     let blockEverything = false;
     if (this.startOfBlockEveryting) {
