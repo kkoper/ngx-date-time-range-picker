@@ -7,6 +7,11 @@ import { DateTimeRange } from 'date-time-range-picker/public_api';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  defaultStartDate = new Date(2019, 0, 1);
+  defaultEndDate = new Date(2019, 0, 1);
+
+  startDate: Date;
+  endDate: Date;
   private unavailability: DateTimeRange[][] = [
     [
       { start: new Date(2019, 0, 14, 10, 0), end: new Date(2019, 0, 14, 21, 0) },
@@ -57,6 +62,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {}
 
   onDateTimeRangeSelected(range: DateTimeRange) {
-    console.log(`From ${range.start} until ${range.end}`);
+    this.startDate = range.start;
+    this.endDate = range.end;
   }
 }

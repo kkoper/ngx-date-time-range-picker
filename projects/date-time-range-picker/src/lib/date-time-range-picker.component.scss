@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+
+  span {
+    color: darkgrey;
+    margin: 12px;
+  }
+}

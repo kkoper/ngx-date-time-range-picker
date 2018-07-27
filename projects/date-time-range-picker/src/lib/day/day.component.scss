@@ -1,8 +1,12 @@
 .day-block {
+  font-size: 0.8rem;
   display: inline-block;
   padding: 0.5rem;
   width: 1rem;
-  text-align: right;
+  text-align: center;
+  color: cornflowerblue;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .unavailable {
@@ -25,9 +29,6 @@
 
 .selected {
   background: orange;
-  &:hover {
-    background: cornflowerblue;
-  }
 }
 
 .available {
