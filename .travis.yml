@@ -15,7 +15,6 @@ script:
 
 before_deploy:
   - cd dist/@snappcar/date-time-range-picker
-  - ls
 deploy:
   - provider: npm
     skip-cleanup: true
@@ -30,5 +29,4 @@ deploy:
     on:
       all_branches: true
 after_deploy:
-  - cd ../../
-  - ls
+  - cd ../../../
