@@ -13,17 +13,14 @@ script:
   - yarn build_lib
   - yarn build:prod
 
-# before_deploy:
-#   - cd dist/@snappcar/date-time-range-picker
+before_deploy:
+  - cd dist/@snappcar/date-time-range-picker
 deploy:
-    script: cd dist/@snappcar/date-time-range-picker
   - provider: npm
-    skip-cleanup: true
     email: "devops@snappcar.nl"
     api_key: $NPM_TOKEN
     on:
       all_branches: true
-    script: cd dist/date-time-range-picker-app
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
