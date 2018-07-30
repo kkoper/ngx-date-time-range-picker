@@ -25,7 +25,7 @@ deploy:
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-    local-dir: ../../date-time-range-picker-app
+    local-dir: dist/date-time-range-picker-app
     on:
       all_branches: true
 after_deploy:
