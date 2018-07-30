@@ -19,6 +19,8 @@ deploy:
     local-dir: dist/@snappcar/date-time-range-picker
     api_key:
       secure: fn+2ZPf9PM033ciN0fK6jIHdLAQhKBlgJJt1s6BdM53Hxnktcw2ZNpzJ2biEWn9lCBtX4hTDHy8Ct6lIwVH2NKjSmUNv214uTeLKScrwRDRpKRkbL0GfyupddQZyjZzBZPxcReX4iJbCTTpQMB2YDhsKDELKFLF3xwVabQnzFE/nZmbPa7JeZzY8hDI9AHlwWkxrRm6kdOxtRgfD02dTh+gdhv2otO+Epl0ktAp3suapOY2+pwPPUgDSqkwEV5sLCO7zDGrod7NRB3GFPKt7MBBtnzE+5dwNYKM/60dkczi0/CxiGqd7s4sD6zE0mq+SnReH0XsO2o1s1SOqHqL/m6H1dwyfwZ4vnBjnW0Z6WbM0dUOZ3d+0t2rzvY5AgSBIdyq7CkD9gR3Zt3eHLXGL3/BytmwoERKvz3l8gwwD4VWRmxntYFafyiFMehv8Q3SxeJcLP6s8b0+RiTXv1yjfTVHk8OTerVWe4NgX4j7GKerQgV2BkKaua8iCISedXYnD2P/UKv76k2PwMErJ4mxonGOVEw+wbf7ab+bd676zehw8uDT0oYFpcTqCtnfQKBo0CE0PwV6R2KUViY1jmkCEQQlt0PrN6zjm4ab2IO1dFktou/qckS7qy8HnLRtQ8TNAhKjaENnOqowJ9h1Mc1q5X2nyLYTF584b7YmRFahfbQs=
+    on:
+      all_branches: true
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
