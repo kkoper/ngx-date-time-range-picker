@@ -7,6 +7,7 @@ import { DateTimeRange } from 'projects/date-time-range-picker/src/public_api';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  title = 'Date time range picker';
   defaultStartDate = new Date(2019, 0, 1);
   defaultEndDate = new Date(2019, 0, 1);
 
