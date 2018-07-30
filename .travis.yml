@@ -21,12 +21,12 @@ deploy:
     email: "devops@snappcar.nl"
     api_key: $NPM_TOKEN
     on:
-      all_branches: true
+      branch: master
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
     local-dir: dist/date-time-range-picker-app
     on:
-      all_branches: true
+      branch: master
 after_deploy:
   - cd ../../../
