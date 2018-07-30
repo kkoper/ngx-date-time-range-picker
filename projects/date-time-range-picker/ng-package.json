@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/date-time-range-picker",
+  "dest": "../../dist/@snappcar/date-time-range-picker",
   "deleteDestPath": false,
   "lib": {
     "entryFile": "src/public_api.ts"

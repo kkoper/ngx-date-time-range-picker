@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DateTimeRange } from 'date-time-range-picker/public_api';
+import { DateTimeRange } from 'projects/date-time-range-picker/src/public_api';
 
 @Component({
   selector: 'app-root',

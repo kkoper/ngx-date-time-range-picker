@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DateTimeRangePickerModule } from 'date-time-range-picker';
+import { DateTimeRangePickerModule } from '../../projects/date-time-range-picker/src/public_api';
 import { AppComponent } from './app.component';
 
 @NgModule({
