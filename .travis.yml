@@ -9,7 +9,7 @@ cache:
     - node_modules
 
 script:
-  - yarn test
+  # - yarn test
   - yarn build_lib
   - yarn build:prod
 
@@ -22,13 +22,13 @@ deploy:
     email: "devops@snappcar.nl"
     api_key: $NPM_TOKEN
     on:
-      branch: master
+      all_branches: true
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-    local-dir: dist/date-time-range-picker-app
+    local-dir: ../../date-time-range-picker-app
     on:
-      branch: master
+      all_branches: true
 after_deploy:
   - cd ../../
   - ls
