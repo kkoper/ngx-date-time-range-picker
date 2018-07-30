@@ -21,7 +21,6 @@ deploy:
     api_key: $NPM_TOKEN
     on:
       all_branches: true
-      repo: "@snappcar/date-time-range-picker"
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
