@@ -13,11 +13,12 @@ script:
   - yarn build_lib
   - yarn build:prod
 
+before_deploy:
+  - cd dist/@snappcar/date-time-range-picker
 deploy:
   - provider: npm
     skip-cleanup: true
     email: "devops@snappcar.nl"
-    local-dir: dist/@snappcar/date-time-range-picker
     api_key: $NPM_TOKEN
     on:
       all_branches: true
