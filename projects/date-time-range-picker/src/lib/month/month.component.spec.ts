@@ -11,6 +11,8 @@ const moment = moment_;
 fdescribe('MonthComponent', () => {
   let component: MonthComponent;
   let fixture: ComponentFixture<MonthComponent>;
+  const initialMonth = 6;
+  const initialYear = 2018;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,10 +28,8 @@ fdescribe('MonthComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MonthComponent);
     component = fixture.componentInstance;
-    const monthToUse = 6;
-    const yearToUse = 2018;
     const unavailabilityToUse: DateTimeRange[] = [];
-    component.selectedDate = new Date(yearToUse, monthToUse, 1);
+    component.selectedDate = new Date(initialYear, initialMonth, 1);
     component.unavailability = unavailabilityToUse;
   });
 
@@ -48,13 +48,11 @@ fdescribe('MonthComponent', () => {
     });
   });
 
-  it('should show the current month and year', () => {
+  it('should show the correct month and year', () => {
     component.ngOnInit();
     fixture.detectChanges();
-    const currentYear = moment().year();
-    const currentMonth = moment().format('MMMM');
-    expect(fixture.debugElement.nativeElement.innerHTML).toContain(currentYear);
-    expect(fixture.debugElement.nativeElement.innerHTML).toContain(currentMonth);
+    expect(fixture.debugElement.nativeElement.innerHTML).toContain('2018');
+    expect(fixture.debugElement.nativeElement.innerHTML).toContain('July');
   });
 
   it('should have the correct number of dummy days before', () => {

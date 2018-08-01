@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as moment_ from 'moment';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { DateTimeRange } from './models/date-time-range';
 const moment = moment_;
 
@@ -11,7 +13,7 @@ const moment = moment_;
 export class DateTimeRangePickerComponent implements OnInit {
   @Input() selectedStart: Date = moment().toDate();
   @Input() selectedEnd: Date = moment().toDate();
-  @Input() getMonthUnavailability: (date: Date) => DateTimeRange[];
+  @Input() getMonthUnavailability: (date: Date) => Observable<DateTimeRange[]>;
   @Output() dateTimeRangeSelected = new EventEmitter<DateTimeRange>();
 
   startMonthUnavailability: DateTimeRange[];
@@ -25,7 +27,11 @@ export class DateTimeRangePickerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.startMonthUnavailability = this.getMonthUnavailability(this.selectedStart);
+    this.getMonthUnavailability(this.selectedStart)
+      .pipe(take(1))
+      .subscribe((unavailability: DateTimeRange[]) => {
+        this.startMonthUnavailability = unavailability;
+      });
     this.evaluateEndMonthUnavailability(this.selectedEnd);
   }
 
@@ -49,7 +55,11 @@ export class DateTimeRangePickerComponent implements OnInit {
   }
 
   onStartMonthChanged(date: Date) {
-    this.startMonthUnavailability = this.getMonthUnavailability(date);
+    this.getMonthUnavailability(date)
+      .pipe(take(1))
+      .subscribe((unavailability: DateTimeRange[]) => {
+        this.startMonthUnavailability = unavailability;
+      });
   }
 
   onEndMonthChanged(date: Date) {
@@ -57,33 +67,36 @@ export class DateTimeRangePickerComponent implements OnInit {
   }
 
   private evaluateEndMonthUnavailability(date: Date) {
-    let unavailabilityToUse = this.getMonthUnavailability(date);
-    const isDateAfterSelectedStart = moment(date).isAfter(moment(this.selectedStart), 'minute');
-    let blockEverything = false;
-    if (this.startOfBlockEveryting) {
-      blockEverything = moment(date).isAfter(moment(this.startOfBlockEveryting), 'month');
-    }
+    this.getMonthUnavailability(date)
+      .pipe(take(1))
+      .subscribe((unavailabilityToUse: DateTimeRange[]) => {
+        const isDateAfterSelectedStart = moment(date).isAfter(moment(this.selectedStart), 'minute');
+        let blockEverything = false;
+        if (this.startOfBlockEveryting) {
+          blockEverything = moment(date).isAfter(moment(this.startOfBlockEveryting), 'month');
+        }
 
-    if (isDateAfterSelectedStart) {
-      if (blockEverything) {
-        unavailabilityToUse = this.getFullMonthUnavailability(date);
-      } else {
-        const filteredUnavailabilities = [];
-        for (const unavailability of unavailabilityToUse) {
-          if (moment(unavailability.start).isAfter(moment(this.selectedStart, 'minute'))) {
-            filteredUnavailabilities.push(
-              this.getUnavailabilityUntilTheEndOfTheMonth(unavailability.start)
-            );
-            this.startOfBlockEveryting = unavailability.start;
-            break;
+        if (isDateAfterSelectedStart) {
+          if (blockEverything) {
+            unavailabilityToUse = this.getFullMonthUnavailability(date);
           } else {
-            filteredUnavailabilities.push(unavailability);
+            const filteredUnavailabilities = [];
+            for (const unavailability of unavailabilityToUse) {
+              if (moment(unavailability.start).isAfter(moment(this.selectedStart, 'minute'))) {
+                filteredUnavailabilities.push(
+                  this.getUnavailabilityUntilTheEndOfTheMonth(unavailability.start)
+                );
+                this.startOfBlockEveryting = unavailability.start;
+                break;
+              } else {
+                filteredUnavailabilities.push(unavailability);
+              }
+            }
+            unavailabilityToUse = [...filteredUnavailabilities];
           }
         }
-        unavailabilityToUse = [...filteredUnavailabilities];
-      }
-    }
-    this.endMonthUnavailability = [...unavailabilityToUse];
+        this.endMonthUnavailability = [...unavailabilityToUse];
+      });
   }
 
   private getUnavailabilityUntilTheEndOfTheMonth(start: Date): DateTimeRange {

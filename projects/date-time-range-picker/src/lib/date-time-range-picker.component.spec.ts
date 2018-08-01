@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import * as moment_ from 'moment';
+import { of } from 'rxjs';
 import { DateTimeRangePickerComponent } from './date-time-range-picker.component';
 import { DateTimeComponent } from './date-time/date-time.component';
 import { DayComponent } from './day/day.component';
@@ -29,7 +30,7 @@ describe('DateTimeRangePickerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DateTimeRangePickerComponent);
     component = fixture.componentInstance;
-    component.getMonthUnavailability = () => [];
+    component.getMonthUnavailability = () => of([]);
     fixture.detectChanges();
   });
 
@@ -81,7 +82,7 @@ describe('DateTimeRangePickerComponent', () => {
       start: new Date(2019, 0, 14, 10, 0),
       end: new Date(2019, 0, 14, 21, 0)
     };
-    component.getMonthUnavailability = () => [unavailabilityToReturn];
+    component.getMonthUnavailability = () => of([unavailabilityToReturn]);
 
     component.onStartMonthChanged(new Date(2019, 1, 1));
 
@@ -94,7 +95,7 @@ describe('DateTimeRangePickerComponent', () => {
       start: new Date(2019, 0, 14, 10, 0),
       end: new Date(2019, 0, 14, 21, 0)
     };
-    spyOn(component, 'getMonthUnavailability').and.returnValue([unavailabilityToReturn]);
+    spyOn(component, 'getMonthUnavailability').and.returnValue(of([unavailabilityToReturn]));
 
     component.onEndMonthChanged(new Date(2019, 1, 1));
 
@@ -113,7 +114,7 @@ describe('DateTimeRangePickerComponent', () => {
         start: new Date(2019, 0, 14, 10, 0),
         end: new Date(2019, 0, 31, 23, 59, 59, 999)
       };
-      component.getMonthUnavailability = () => [unavailabilityToReturn];
+      component.getMonthUnavailability = () => of([unavailabilityToReturn]);
 
       component.onDateTimeFromSelected(new Date(2019, 0, 4));
       expect(component.endMonthUnavailability).toEqual([expectedEndMonthUnavailabilty]);
@@ -128,7 +129,7 @@ describe('DateTimeRangePickerComponent', () => {
         start: new Date(2019, 1, 1, 0, 0),
         end: new Date(2019, 1, 28, 23, 59, 59, 999)
       };
-      component.getMonthUnavailability = () => [unavailabilityToReturn];
+      component.getMonthUnavailability = () => of([unavailabilityToReturn]);
 
       component.onDateTimeFromSelected(new Date(2019, 0, 4));
       component.onEndMonthChanged(new Date(2019, 1, 4));
