@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTimeRange } from 'projects/date-time-range-picker/src/public_api';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -55,9 +56,9 @@ export class AppComponent implements OnInit {
     []
   ];
 
-  public onGetMonthUnavailability = (date: Date): DateTimeRange[] => {
+  public onGetMonthUnavailability = (date: Date): Observable<DateTimeRange[]> => {
     const unavailabilityToReturn = this.unavailability[date.getMonth()];
-    return [...unavailabilityToReturn];
+    return of(unavailabilityToReturn);
   }
 
   ngOnInit() {}
