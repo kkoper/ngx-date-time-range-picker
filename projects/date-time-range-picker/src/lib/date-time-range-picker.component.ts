@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import * as moment_ from 'moment';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -8,7 +8,8 @@ const moment = moment_;
 @Component({
   selector: 'ngx-date-time-range-picker',
   templateUrl: 'date-time-range-picker.component.html',
-  styleUrls: ['date-time-range-picker.component.scss']
+  styleUrls: ['date-time-range-picker.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DateTimeRangePickerComponent implements OnInit {
   @Input() selectedStart: Date = moment().toDate();

@@ -5,7 +5,8 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 import * as moment_ from 'moment';
 import { DateTimeRange } from '../models/date-time-range';
@@ -15,7 +16,8 @@ const moment = moment_;
   selector: 'ngx-date-time',
   templateUrl: './date-time.component.html',
   styleUrls: ['./date-time.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class DateTimeComponent implements OnInit {
   @Input() monthUnavailabilities: DateTimeRange[] = [];

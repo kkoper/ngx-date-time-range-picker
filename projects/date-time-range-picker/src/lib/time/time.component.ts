@@ -6,7 +6,8 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Output
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 import * as moment_ from 'moment';
 import { DateTimeRange } from '../models/date-time-range';
@@ -17,7 +18,8 @@ const moment = moment_;
   selector: 'ngx-time',
   templateUrl: './time.component.html',
   styleUrls: ['./time.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class TimeComponent implements OnInit, OnChanges {
   @Input() unavailabilities: DateTimeRange[];
