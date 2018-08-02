@@ -4,7 +4,8 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 import { DayState } from '../models/day-state';
 
@@ -12,7 +13,8 @@ import { DayState } from '../models/day-state';
   selector: 'ngx-day',
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class DayComponent implements OnInit {
   @Input() value?: number;
