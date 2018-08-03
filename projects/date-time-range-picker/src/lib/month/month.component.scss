@@ -30,6 +30,31 @@
   }
 }
 
+.legend-container {
+  margin-top: 1rem;
+
+  .legend {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+
+    &.legend-available {
+      color: cornflowerblue;
+    }
+
+    &.legend-partial {
+      color: purple;
+    }
+
+    &.legend-unavailable {
+      color: lightgrey;
+    }
+
+    &.legend-selected {
+      color: orange;
+    }
+  }
+}
+
 .btn {
   cursor: pointer;
 }

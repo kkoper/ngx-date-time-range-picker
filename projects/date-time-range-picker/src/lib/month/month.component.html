@@ -21,3 +21,10 @@
     <ngx-day [value]="day.value" [status]="day.status" [hovered]="day.hovered" (hoverDay)="dayHovered($event)" (selectDay)="daySelected($event)"></ngx-day>
   </span>
 </div>
+
+<div class="legend-container">
+  <div class="legend legend-available">--- available</div>
+  <div class="legend legend-partial">--- partially available</div>
+  <div class="legend legend-unavailable">--- unavailable</div>
+  <div class="legend legend-selected">--- selected</div>
+</div>
