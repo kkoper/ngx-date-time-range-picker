@@ -5,7 +5,6 @@ import { of } from 'rxjs';
 import { DateTimeRangePickerComponent } from './date-time-range-picker.component';
 import { DateTimeComponent } from './date-time/date-time.component';
 import { DayComponent } from './day/day.component';
-import { DateTimeRange } from './models/date-time-range';
 import { MonthComponent } from './month/month.component';
 import { TimeComponent } from './time/time.component';
 const moment = moment_;
@@ -51,7 +50,7 @@ describe('DateTimeRangePickerComponent', () => {
     it('should open the end time component when the startDateTime has been picked', () => {
       expect(component.openEnd).toBe(false);
 
-      component.onDateTimeFromSelected(new Date(2019, 1, 1, 1, 30));
+      component.onAdvanceFlow();
 
       expect(component.openEnd).toBe(true);
     });
@@ -63,17 +62,49 @@ describe('DateTimeRangePickerComponent', () => {
     });
   });
 
-  it('should emit when the full range has been picked', done => {
+  it('should emit when the start date has been updated', () => {
     const startDate = new Date(2019, 1, 1, 1, 30);
     const endDate = new Date(2019, 1, 1, 2, 30);
+    const updatedStartDate = new Date(2019, 1, 1, 4, 30);
+    const updatedEndDate = new Date(2019, 1, 1, 5);
 
-    component.dateTimeRangeSelected.subscribe((range: DateTimeRange) => {
-      expect(range).toEqual({ start: startDate, end: endDate });
-      done();
-    });
+    const emitionSpy = spyOn(component.dateTimeRangeSelected, 'emit');
 
     component.onDateTimeFromSelected(startDate);
     component.onDateTimeUntilSelected(endDate);
+    expect(component.dateTimeRangeSelected.emit).toHaveBeenCalledWith({
+      start: startDate,
+      end: endDate
+    });
+    emitionSpy.calls.reset();
+
+    component.onDateTimeFromSelected(updatedStartDate);
+    expect(component.dateTimeRangeSelected.emit).toHaveBeenCalledWith({
+      start: updatedStartDate,
+      end: updatedEndDate
+    });
+  });
+
+  it('should emit when the end date has been updated', () => {
+    const startDate = new Date(2019, 1, 1, 1, 30);
+    const endDate = new Date(2019, 1, 1, 2, 30);
+    const updatedEndDate = new Date(2019, 1, 1, 5);
+
+    const emitionSpy = spyOn(component.dateTimeRangeSelected, 'emit');
+
+    component.onDateTimeFromSelected(startDate);
+    component.onDateTimeUntilSelected(endDate);
+    expect(component.dateTimeRangeSelected.emit).toHaveBeenCalledWith({
+      start: startDate,
+      end: endDate
+    });
+    emitionSpy.calls.reset();
+
+    component.onDateTimeUntilSelected(updatedEndDate);
+    expect(component.dateTimeRangeSelected.emit).toHaveBeenCalledWith({
+      start: startDate,
+      end: updatedEndDate
+    });
   });
 
   it('should update the start month availability when the start month is changed', () => {

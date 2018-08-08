@@ -3,7 +3,7 @@
         From:
     </span>
     <ngx-date-time [monthUnavailabilities]='startMonthUnavailability' [selectedDate]='selectedStart' (monthChanged)='onStartMonthChanged($event)'
-        (dateTimeSelected)='onDateTimeFromSelected($event)' [isOpen]='openStart' [isDisabled]='disabledStart'></ngx-date-time>
+        (dateTimeSelected)='onDateTimeFromSelected($event)' (advanceFlow)='onAdvanceFlow()' [isOpen]='openStart' [isDisabled]='disabledStart'></ngx-date-time>
     <span class="input-label">
         Until:
     </span>
