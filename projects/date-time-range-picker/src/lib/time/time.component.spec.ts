@@ -37,7 +37,7 @@ describe('TimeComponent', () => {
   });
 
   it('should show all options in a day', () => {
-    const options = fixture.debugElement.queryAll(By.css('option'));
+    const options = fixture.debugElement.queryAll(By.css('li.time-list-item'));
 
     expect(options.length).toBe(48);
   });
@@ -51,7 +51,7 @@ describe('TimeComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const options = fixture.debugElement.queryAll(By.css('option:disabled'));
+    const options = fixture.debugElement.queryAll(By.css('li.time-list-item.disabled'));
 
     expect(options.length).toBe(23);
   });
@@ -65,7 +65,7 @@ describe('TimeComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const options = fixture.debugElement.queryAll(By.css('option:disabled'));
+    const options = fixture.debugElement.queryAll(By.css('li.time-list-item.disabled'));
 
     expect(options.length).toBe(2);
   });
@@ -79,7 +79,7 @@ describe('TimeComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const options = fixture.debugElement.queryAll(By.css('option:disabled'));
+    const options = fixture.debugElement.queryAll(By.css('li.time-list-item.disabled'));
 
     expect(options.length).toBe(5);
   });

@@ -1,30 +1,38 @@
-<div class='year'>
-  <strong>{{year}}</strong>
-</div>
+<div class="wrapper">
+  <div class="header">
+    <div class="year">
+      {{year}}
+    </div>
 
-<div class="month-header">
-  <span class='btn btn-previous-month' (click)='goToPreviousMonth()'>⬅️</span>
-  <div class='month-name'>{{monthName}}</div>
-  <span class='btn btn-next-month' (click)='goToNextMonth()'>➡️</span>
-</div>
+    <div class="month-header">
+      <span class="btn btn-previous-month" (click)="goToPreviousMonth()">
+        <svg width="6" height="10" viewBox="0 0 10 16"><path d="M.328 8.792l6.88 6.88a1.12 1.12 0 1 0 1.584-1.585L2.705 8l6.087-6.087A1.12 1.12 0 0 0 7.208.328l-6.88 6.88a1.117 1.117 0 0 0 0 1.584z" fill="#62696C" fill-rule="nonzero"/></svg>
+      </span>
+      <div class="month-name">{{monthName}}</div>
+      <span class="btn btn-next-month" (click)="goToNextMonth()">
+        <svg width="6" height="10" viewBox="0 0 10 16"><path d="M8.792 8.792l-6.88 6.88a1.12 1.12 0 1 1-1.584-1.585L6.416 8 .328 1.913A1.12 1.12 0 0 1 1.913.328l6.88 6.88a1.117 1.117 0 0 1 0 1.584z" fill="#62696C" fill-rule="nonzero"/></svg>
+      </span>
+    </div>
 
-<div class="month-grid">
-  <span class="day-header">M</span>
-  <span class="day-header">T</span>
-  <span class="day-header">W</span>
-  <span class="day-header">T</span>
-  <span class="day-header">F</span>
-  <span class="day-header">S</span>
-  <span class="day-header">S</span>
-  <hr>
-  <span *ngFor='let day of days' [class.day-before]="day.dummyBefore" [class.day-after]="day.dummyAfter" [class.month-day]="!(day.dummyBefore || day.dummyAfter)">
-    <ngx-day [value]="day.value" [status]="day.status" [hovered]="day.hovered" (hoverDay)="dayHovered($event)" (selectDay)="daySelected($event)"></ngx-day>
-  </span>
-</div>
+    <div class="week-header">
+      <span class="day-header">M</span>
+      <span class="day-header">T</span>
+      <span class="day-header">W</span>
+      <span class="day-header">T</span>
+      <span class="day-header">F</span>
+      <span class="day-header">S</span>
+      <span class="day-header">S</span>
+    </div>
+  </div>
 
-<div class="legend-container">
-  <div class="legend legend-available">--- available</div>
-  <div class="legend legend-partial">--- partially available</div>
-  <div class="legend legend-unavailable">--- unavailable</div>
-  <div class="legend legend-selected">--- selected</div>
+  <div class="month-grid">
+    <span *ngFor="let day of days" [class.day-before]="day.dummyBefore" [class.day-after]="day.dummyAfter" [class.month-day]="!(day.dummyBefore || day.dummyAfter)">
+      <ngx-day [value]="day.value" [status]="day.status" [hovered]="day.hovered" (hoverDay)="dayHovered($event)" (selectDay)="daySelected($event)"></ngx-day>
+    </span>
+  </div>
+
+  <div class="legend-container">
+    <div class="legend legend-available">available</div>
+    <div class="legend legend-partial">partially available</div>
+  </div>
 </div>

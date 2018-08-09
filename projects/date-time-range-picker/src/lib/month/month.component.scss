@@ -1,60 +1,91 @@
-.month-grid {
-  width: 14rem;
+// .legend-available
+// .legend-partial
+// .legend-unavailable
+// .legend-selected
 
-  .day-header {
-    width: 1rem;
-    padding: 0.5rem;
-    width: 1rem;
-    text-align: right;
-    display: inline-block;
-    color: cornflowerblue;
-    font-size: 0.7rem;
-  }
+$font-size-sm: .75rem;
+$general-spacing: .5rem;
+
+$header-year-color: #A4ABAD;
+$header-month-color: #62696C;
+
+$day-color: #A4ABAD;
+
+$legend-available: #0081B7;
+$legend-partial: #FF6600;
+
+.wrapper {
+  padding: $general-spacing;
+}
+
+// text alignment
+.header,
+.week-header,
+.month-grid {
+  text-align: center;
+}
+
+.header {
+  padding-top: 1rem;
 }
 
 .year {
+  color: $header-year-color;
+  font-size: $font-size-sm;
   text-align: center;
-  font-size: 0.7rem;
-  color: darkgray;
 }
 
 .month-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 8px 0;
+  margin: $general-spacing 0;
 
   .month-name {
+    color: $header-month-color;
     margin: auto;
-    color: royalblue;
   }
 }
 
-.legend-container {
-  margin-top: 1rem;
+.day-header {
+  color: $day-color;
+  padding: $general-spacing;
+  font-size: $font-size-sm;
+  width: 1rem;
+  display: inline-block;
+}
 
-  .legend {
-    padding: 4px 8px;
-    font-size: 0.7rem;
+.month-grid {
+  width: 14rem;
+  display: block;
+  margin: 0 auto;
+}
 
-    &.legend-available {
-      color: cornflowerblue;
-    }
+.legend {
+  font-size: $font-size-sm;
+  border-left: 2px solid #FFF;
+  padding-left: $general-spacing;
+}
 
-    &.legend-partial {
-      color: purple;
-    }
+.legend + .legend {
+  margin-top: $general-spacing;
+}
 
-    &.legend-unavailable {
-      color: lightgrey;
-    }
+.legend-available {
+  border-color: $legend-available;
+}
 
-    &.legend-selected {
-      color: orange;
-    }
-  }
+.legend-partial {
+  border-color: $legend-partial;
 }
 
 .btn {
   cursor: pointer;
+  display: inline-block;
+  width: 1.5rem;
+  line-height: 1.5rem;
+
+  svg {
+    display: inline-block;
+  }
 }

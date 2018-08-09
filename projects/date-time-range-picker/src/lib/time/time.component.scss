@@ -1,7 +1,83 @@
-select {
-  width: 100px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 8px;
+$list-item-height: 2.5rem;
+$list-item-transition: background .15s ease-in-out, color .15s ease-in-out;
+$list-item-color: #62696C;
+$list-item-hover-color: #0081B7;
+$list-item-hover-bg: #F4F6F6;
+$list-item-selected-bg: $list-item-hover-color;
+$list-item-selected-color: #FFFFFF;
+$list-item-disabled: #C5CBCD;
+
+.time-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  max-height: 17.5rem;
+  overflow-y: auto;
+
+  // Gradients shared styles
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: $list-item-height;
+  }
+
+  // Gradient at the top
+  &:before {
+    top: 0;
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+  }
+
+  // Gradient at the bottom
+  &:after {
+    bottom: 0;
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+  }
+}
+
+.time-list-item {
+  padding: .5rem 1rem;
+  line-height: 1.5rem;
+  color: $list-item-color;
+  transition: $list-item-transition;
+
+  &:hover {
+    cursor: pointer;
+    color: $list-item-hover-color;
+    background-color: $list-item-hover-bg;
+  }
+
+  &.selected {
+    color: $list-item-selected-color;
+    background-color: $list-item-selected-bg;
+  }
+
+  &.disabled {
+    color: $list-item-disabled;
+
+    &:hover {
+      color: $list-item-color;
+      cursor: default;
+      background: none;
+    }
+  }
+
+  // offset for gradients
+  &:first-child {
+    margin-top: $list-item-height;
+  }
+
+  &:last-child {
+    margin-bottom: $list-item-height;
+  }
 }
