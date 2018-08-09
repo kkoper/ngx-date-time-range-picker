@@ -1,38 +1,41 @@
+$background-transition: background .15s ease-out;
+$background-hover: #F4F6F6;
+$color-orange: #FF6600;
+$color-grey: #A4ABAD;
+$color-white: #FFFFFF;
+$background-active: #0081B7;
+$day-color: #0081B7;
+
 .day-block {
   font-size: 0.8rem;
   display: inline-block;
   padding: 0.5rem;
   width: 1rem;
   text-align: center;
-  color: cornflowerblue;
-  border-radius: 10px;
+  color: $day-color;
   cursor: pointer;
-}
-
-.unavailable {
-  color: lightgrey;
+  transition: $background-transition;
 }
 
 .partial {
-  color: purple;
-  &:hover {
-    background: orange;
-  }
+  color: $color-orange;
 }
 
+.available:hover,
+.partial:hover,
 .hover {
-  background: lightskyblue;
-  &:hover {
-    background: orange;
-  }
+  background: $background-hover;
 }
 
 .selected {
-  background: orange;
+  background: $background-active;
+  color: $color-white;
 }
 
-.available {
+.unavailable {
+  color: $color-grey;
+
   &:hover {
-    background: orange;
+    cursor: default;
   }
 }

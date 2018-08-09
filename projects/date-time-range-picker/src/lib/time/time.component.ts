@@ -66,6 +66,10 @@ export class TimeComponent implements OnInit, OnChanges {
     );
   }
 
+  onTimeSelected(value: TimeSegment): void {
+    this.selectedTimeOption = value;
+  }
+
   private applyUnavailabilities(): void {
     const currentDay = moment(this.selectedDate);
     for (const unavailability of this.unavailabilities) {

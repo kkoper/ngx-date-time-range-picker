@@ -1,9 +1,31 @@
+$box-shadow: 0px 0px 15px rgba(36, 39, 41, 0.1);
+$background-white: #FFFFFF;
+$border-color: #C5CBCD;
+$border-color-active: #0081B7;
+$color-black: #62696C;
+
 .container {
   display: flex;
   flex-direction: row;
 
+  // set basic styles for dropdowns
+  .input-container ngx-month,
+  .input-container ngx-time {
+    position: absolute;
+    top: 100%;
+    min-width: 100%;
+    left: 0;
+    z-index: 99;
+    margin-top: .25rem;
+    border-radius: .125rem;
+    border: 1px solid $border-color;
+    box-shadow: $box-shadow;
+    background-color: $background-white;
+  }
+
   .input-container {
     width: 250px;
+    position: relative;
     display: flex;
     flex-direction: column;
 
@@ -12,30 +34,21 @@
     }
 
     input {
-      padding: 12px;
-      border: 1px solid cornflowerblue;
-      color: mediumslateblue;
-      font-weight: 700;
+      font-size: .875rem;
+      padding: .75rem;
+      border: 1px solid $border-color;
+      color: $color-black;
+      font-weight: 600;
 
       &:focus {
         outline: none;
       }
 
       &.focused {
-        border: 1px solid orange;
-        color: orangered;
+        border: 1px solid $border-color-active;
+        color: $color-black;
+        box-shadow: $box-shadow;
       }
-    }
-
-    ngx-month {
-      padding: 4px;
-      margin-top: 10px;
-      border: 1px solid orange;
-    }
-
-    ngx-time {
-      padding: 4px;
-      margin-top: 10px;
     }
   }
 }
