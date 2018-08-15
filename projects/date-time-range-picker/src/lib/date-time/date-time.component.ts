@@ -32,7 +32,7 @@ export class DateTimeComponent implements OnInit {
   @Output() dateTimeSelected = new EventEmitter<Date>();
   @Output() advanceFlow = new EventEmitter<void>();
 
-  activeMoment: moment_.Moment = moment();
+  activeMoment: moment_.Moment;
   showDatePicker: boolean;
   showTimePicker: boolean;
   dateSelected: boolean;
