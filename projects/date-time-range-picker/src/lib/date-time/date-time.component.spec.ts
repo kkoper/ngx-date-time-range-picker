@@ -136,9 +136,16 @@ describe('DateTimeComponent', () => {
 
   it('should emit a date-time when a time is picked', done => {
     spyOn(component.dateTimeSelected, 'emit').and.callThrough();
+    component.onDayMonthSelected(
+      moment()
+        .date(26)
+        .startOf('minute')
+        .toDate()
+    );
     component.dateTimeSelected.subscribe((selectedDate: Date) => {
       expect(selectedDate).toEqual(
         moment()
+          .date(26)
           .hour(20)
           .minute(10)
           .startOf('minute')
@@ -173,6 +180,12 @@ describe('DateTimeComponent', () => {
   it('should emit an advance flow when a time is picked', () => {
     spyOn(component.advanceFlow, 'emit').and.callThrough();
 
+    component.onDayMonthSelected(
+      moment()
+        .date(26)
+        .startOf('minute')
+        .toDate()
+    );
     component.onTimeSelected({ hours: 20, minutes: 10 });
 
     expect(component.advanceFlow.emit).toHaveBeenCalled();
