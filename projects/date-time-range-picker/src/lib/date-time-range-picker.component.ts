@@ -12,10 +12,14 @@ const moment = moment_;
   encapsulation: ViewEncapsulation.None
 })
 export class DateTimeRangePickerComponent implements OnInit {
-  @Input() selectedStart: Date = moment().toDate();
-  @Input() selectedEnd: Date = moment().toDate();
-  @Input() getMonthUnavailability: (date: Date) => Observable<DateTimeRange[]>;
-  @Output() dateTimeRangeSelected = new EventEmitter<DateTimeRange>();
+  @Input()
+  selectedStart: Date;
+  @Input()
+  selectedEnd: Date;
+  @Input()
+  getMonthUnavailability: (date: Date) => Observable<DateTimeRange[]>;
+  @Output()
+  dateTimeRangeSelected = new EventEmitter<DateTimeRange>();
 
   startMonthUnavailability: DateTimeRange[];
   endMonthUnavailability: DateTimeRange[];
@@ -28,12 +32,12 @@ export class DateTimeRangePickerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.getMonthUnavailability(this.selectedStart)
+    this.getMonthUnavailability(this.selectedStart || moment().toDate())
       .pipe(take(1))
       .subscribe((unavailability: DateTimeRange[]) => {
         this.startMonthUnavailability = unavailability;
       });
-    this.evaluateEndMonthUnavailability(this.selectedEnd);
+    this.evaluateEndMonthUnavailability(this.selectedEnd || moment().toDate());
   }
 
   onDateTimeFromSelected(date: Date) {
