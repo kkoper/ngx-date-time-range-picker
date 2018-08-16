@@ -88,7 +88,7 @@ describe('TimeComponent', () => {
     spyOn(component.timeSelected, 'emit').and.callThrough();
 
     const timeToSelect = { hour: 23, minute: 30, isBlocked: false };
-    component.selectedTimeOption = timeToSelect;
+    component.onTimeSelected(timeToSelect);
 
     expect(component.timeSelected.emit).toHaveBeenCalledWith({
       hours: timeToSelect.hour,

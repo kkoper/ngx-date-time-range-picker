@@ -1,3 +1,4 @@
 <ul class="time-list">
-  <li *ngFor='let timeOption of timeOptions' class="time-list-item" [ngClass]="{'disabled': timeOption.isBlocked, 'selected': timeOption.hour === selectedTimeOption.hour && timeOption.minute === selectedTimeOption.minute }" (click)="onTimeSelected(timeOption)">{{timeOption.hour | number:'2.0-0'}}:{{timeOption.minute | number:'2.0-0'}}</li>
+  <li *ngFor='let timeOption of timeOptions' class="time-list-item" [ngClass]="{'disabled': timeOption.isBlocked, 'selected': timeOption.hour === selectedTimeOption?.hour && timeOption.minute === selectedTimeOption?.minute }"
+    (click)="onTimeSelected(timeOption)">{{timeOption.hour | number:'2.0-0'}}:{{timeOption.minute | number:'2.0-0'}}</li>
 </ul>
