@@ -22,30 +22,14 @@ const moment = moment_;
   encapsulation: ViewEncapsulation.None
 })
 export class TimeComponent implements OnInit, OnChanges {
-  @Input() unavailabilities: DateTimeRange[];
-  @Input() selectedDate: Date;
-  @Output() timeSelected = new EventEmitter<Time>();
+  @Input()
+  unavailabilities: DateTimeRange[];
+  @Input()
+  selectedDate: Date;
+  @Output()
+  timeSelected = new EventEmitter<Time>();
 
-  private _selectedTimeOption: TimeSegment;
-  get selectedTimeOption(): TimeSegment {
-    if (!this._selectedTimeOption) {
-      if (this.selectedDate) {
-        const preselection = moment(this.selectedDate)
-          .add(1, 'hours')
-          .startOf('hour');
-        this._selectedTimeOption = {
-          hour: preselection.hour(),
-          minute: preselection.minute(),
-          isBlocked: false
-        };
-      }
-    }
-    return this._selectedTimeOption;
-  }
-  set selectedTimeOption(value: TimeSegment) {
-    this._selectedTimeOption = value;
-    this.timeSelected.emit({ hours: value.hour, minutes: value.minute });
-  }
+  public selectedTimeOption: TimeSegment;
   timeOptions: TimeSegment[];
 
   constructor() {}
@@ -57,6 +41,7 @@ export class TimeComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.initializeTimeSegments();
+    this.setupSelectedTime();
     this.applyUnavailabilities();
   }
 
@@ -68,6 +53,7 @@ export class TimeComponent implements OnInit, OnChanges {
 
   onTimeSelected(value: TimeSegment): void {
     this.selectedTimeOption = value;
+    this.timeSelected.emit({ hours: value.hour, minutes: value.minute });
   }
 
   private applyUnavailabilities(): void {
@@ -173,6 +159,16 @@ export class TimeComponent implements OnInit, OnChanges {
     }
 
     this.timeOptions = [...times];
+  }
+
+  private setupSelectedTime(): void {
+    if (this.selectedDate) {
+      this.selectedTimeOption = {
+        hour: this.selectedDate.getHours(),
+        minute: this.selectedDate.getMinutes(),
+        isBlocked: false
+      } as TimeSegment;
+    }
   }
 }
 
