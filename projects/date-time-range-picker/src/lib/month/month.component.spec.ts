@@ -192,7 +192,7 @@ fdescribe('MonthComponent', () => {
       done();
     });
 
-    const previousMonthButton = fixture.debugElement.queryAll(By.css('.btn-previous-month'));
+    const previousMonthButton = fixture.debugElement.queryAll(By.css('.button-previous-month'));
     expect(previousMonthButton.length).toBe(1);
 
     previousMonthButton[0].triggerEventHandler('click', null);
@@ -218,7 +218,7 @@ fdescribe('MonthComponent', () => {
       done();
     });
 
-    const nextMonthButton = fixture.debugElement.queryAll(By.css('.btn-next-month'));
+    const nextMonthButton = fixture.debugElement.queryAll(By.css('.button-next-month'));
     expect(nextMonthButton.length).toBe(1);
 
     nextMonthButton[0].triggerEventHandler('click', null);
