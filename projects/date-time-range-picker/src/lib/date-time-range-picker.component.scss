@@ -2,9 +2,14 @@
   display: flex;
   flex-direction: row;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
 
-  span.input-label {
-    color: darkgrey;
-    margin: 12px;
-  }
+.input-holder {
+  padding: 0 1rem;
+}
+
+.input-label {
+  color: darkgrey;
+  display: block;
+  margin-bottom: .5rem;
 }

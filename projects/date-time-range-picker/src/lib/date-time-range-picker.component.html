@@ -1,12 +1,16 @@
 <div class="container">
-    <span class="input-label">
-        From:
-    </span>
-    <ngx-date-time [monthUnavailabilities]='startMonthUnavailability' [selectedDate]='selectedStart' (monthChanged)='onStartMonthChanged($event)'
-        (dateTimeSelected)='onDateTimeFromSelected($event)' (advanceFlow)='onAdvanceFlow()' [isOpen]='openStart' [isDisabled]='disabledStart'></ngx-date-time>
-    <span class="input-label">
-        Until:
-    </span>
-    <ngx-date-time [monthUnavailabilities]='endMonthUnavailability' [selectedDate]='selectedEnd' [startFrom]='selectedStart'
-        (monthChanged)='onEndMonthChanged($event)' (dateTimeSelected)='onDateTimeUntilSelected($event)' [isOpen]='openEnd' [isDisabled]='disabledEnd'></ngx-date-time>
+    <div class="input-holder from">
+        <span class="input-label">
+            From:
+        </span>
+        <ngx-date-time [monthUnavailabilities]='startMonthUnavailability' [selectedDate]='selectedStart' (monthChanged)='onStartMonthChanged($event)'
+          (dateTimeSelected)='onDateTimeFromSelected($event)' (advanceFlow)='onAdvanceFlow()' [isOpen]='openStart' [isDisabled]='disabledStart'></ngx-date-time>
+    </div>
+    <div class="input-holder to">
+        <span class="input-label">
+            Until:
+        </span>
+        <ngx-date-time [monthUnavailabilities]='endMonthUnavailability' [selectedDate]='selectedEnd' [startFrom]='selectedStart'
+            (monthChanged)='onEndMonthChanged($event)' (dateTimeSelected)='onDateTimeUntilSelected($event)' [isOpen]='openEnd' [isDisabled]='disabledEnd'></ngx-date-time>
+    </div>
 </div>
