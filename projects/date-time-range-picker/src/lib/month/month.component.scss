@@ -11,7 +11,7 @@ $header-month-color: #62696C;
 
 $day-color: #A4ABAD;
 
-$legend-available: #0081B7;
+$legend-unavailable: #E74005;
 $legend-partial: #FF6600;
 
 .wrapper {
@@ -71,8 +71,8 @@ $legend-partial: #FF6600;
   margin-top: $general-spacing;
 }
 
-.legend-available {
-  border-color: $legend-available;
+.legend-unavailable {
+  border-color: $legend-unavailable;
 }
 
 .legend-partial {
