@@ -22,11 +22,16 @@ const moment = moment_;
   encapsulation: ViewEncapsulation.None
 })
 export class MonthComponent implements OnInit, OnChanges {
-  @Input() unavailability: DateTimeRange[];
-  @Input() selectedDate: Date;
-  @Input() hoverFrom: Date;
-  @Output() dateSelected = new EventEmitter<Date>();
-  @Output() monthChanged = new EventEmitter<Date>();
+  @Input()
+  unavailability: DateTimeRange[];
+  @Input()
+  selectedDate: Date;
+  @Input()
+  hoverFrom: Date;
+  @Output()
+  dateSelected = new EventEmitter<Date>();
+  @Output()
+  monthChanged = new EventEmitter<Date>();
 
   days: Day[];
 
@@ -34,7 +39,7 @@ export class MonthComponent implements OnInit, OnChanges {
   private partialDays: number[];
   private fullDays: number[];
 
-  private activeMoment: moment_.Moment = moment(this.selectedDate);
+  private activeMoment: moment_.Moment = moment(this.selectedDate || undefined);
 
   // Computed values:
   get monthName(): string {
@@ -52,7 +57,7 @@ export class MonthComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.activeMoment = moment(this.selectedDate);
+    this.activeMoment = moment(this.selectedDate || undefined);
     this.assessAvailabilityPerDay();
     this.setupMonth();
   }
@@ -117,7 +122,9 @@ export class MonthComponent implements OnInit, OnChanges {
       this.days.push(newDay);
     }
 
-    this.markSelectedDate();
+    if (this.selectedDate) {
+      this.markSelectedDate();
+    }
   }
 
   private markSelectedDate() {

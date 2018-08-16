@@ -16,42 +16,46 @@ export class AppComponent implements OnInit {
   endDate: Date;
   private unavailability: DateTimeRange[][] = [
     [
-      { start: new Date(2019, 0, 14, 10, 0), end: new Date(2019, 0, 14, 21, 0) },
-      { start: new Date(2019, 0, 16, 10, 0), end: new Date(2019, 0, 18, 18, 0) },
-      { start: new Date(2019, 0, 26, 16, 0), end: new Date(2019, 0, 26, 18, 0) },
-      { start: new Date(2019, 0, 26, 23, 0), end: new Date(2019, 0, 27, 11, 0) }
+      { start: new Date(2018, 0, 14, 10, 0), end: new Date(2018, 0, 14, 21, 0) },
+      { start: new Date(2018, 0, 16, 10, 0), end: new Date(2018, 0, 18, 18, 0) },
+      { start: new Date(2018, 0, 26, 16, 0), end: new Date(2018, 0, 26, 18, 0) },
+      { start: new Date(2018, 0, 26, 23, 0), end: new Date(2018, 0, 27, 11, 0) }
     ],
-    [{ start: new Date(2019, 1, 26, 23, 0), end: new Date(2019, 1, 27, 11, 0) }],
-    [{ start: new Date(2019, 2, 26, 23, 0), end: new Date(2019, 2, 27, 11, 0) }],
+    [{ start: new Date(2018, 1, 26, 23, 0), end: new Date(2018, 1, 27, 11, 0) }],
+    [{ start: new Date(2018, 2, 26, 23, 0), end: new Date(2018, 2, 27, 11, 0) }],
     [
-      { start: new Date(2019, 3, 18, 10, 0), end: new Date(2019, 3, 21, 21, 0) },
-      { start: new Date(2019, 3, 25, 10, 0), end: new Date(2019, 3, 26, 11, 0) },
-      { start: new Date(2019, 3, 26, 16, 0), end: new Date(2019, 3, 26, 18, 0) },
-      { start: new Date(2019, 3, 26, 23, 0), end: new Date(2019, 3, 27, 11, 0) }
-    ],
-    [
-      { start: new Date(2019, 4, 14, 10, 0), end: new Date(2019, 4, 14, 21, 0) },
-      { start: new Date(2019, 4, 16, 10, 0), end: new Date(2019, 4, 18, 18, 0) }
-    ],
-    [{ start: new Date(2019, 5, 26, 16, 0), end: new Date(2019, 5, 26, 18, 0) }],
-    [
-      { start: new Date(2019, 6, 26, 16, 0), end: new Date(2019, 6, 26, 18, 0) },
-      { start: new Date(2019, 6, 26, 23, 0), end: new Date(2019, 6, 27, 11, 0) }
+      { start: new Date(2018, 3, 18, 10, 0), end: new Date(2018, 3, 21, 21, 0) },
+      { start: new Date(2018, 3, 25, 10, 0), end: new Date(2018, 3, 26, 11, 0) },
+      { start: new Date(2018, 3, 26, 16, 0), end: new Date(2018, 3, 26, 18, 0) },
+      { start: new Date(2018, 3, 26, 23, 0), end: new Date(2018, 3, 27, 11, 0) }
     ],
     [
-      { start: new Date(2019, 7, 14, 10, 0), end: new Date(2019, 7, 14, 21, 0) },
-      { start: new Date(2019, 7, 16, 10, 0), end: new Date(2019, 7, 18, 18, 0) }
+      { start: new Date(2018, 4, 14, 10, 0), end: new Date(2018, 4, 14, 21, 0) },
+      { start: new Date(2018, 4, 16, 10, 0), end: new Date(2018, 4, 18, 18, 0) }
+    ],
+    [{ start: new Date(2018, 5, 26, 16, 0), end: new Date(2018, 5, 26, 18, 0) }],
+    [
+      { start: new Date(2018, 6, 26, 16, 0), end: new Date(2018, 6, 26, 18, 0) },
+      { start: new Date(2018, 6, 26, 23, 0), end: new Date(2018, 6, 27, 11, 0) }
     ],
     [
-      { start: new Date(2019, 8, 14, 10, 0), end: new Date(2019, 8, 14, 21, 0) },
-      { start: new Date(2019, 8, 26, 16, 0), end: new Date(2019, 8, 26, 18, 0) },
-      { start: new Date(2019, 8, 26, 23, 0), end: new Date(2019, 8, 27, 11, 0) }
+      { start: new Date(2018, 7, 14, 10, 0), end: new Date(2018, 7, 14, 21, 0) },
+      { start: new Date(2018, 7, 16, 10, 0), end: new Date(2018, 7, 18, 18, 0) }
     ],
-    [{ start: new Date(2019, 9, 14, 10, 0), end: new Date(2019, 9, 14, 21, 0) }],
-    [{ start: new Date(2019, 9, 26, 23, 0), end: new Date(2019, 9, 27, 11, 0) }],
     [
-      { start: new Date(2019, 9, 14, 10, 0), end: new Date(2019, 9, 14, 21, 0) },
-      { start: new Date(2019, 9, 26, 23, 0), end: new Date(2019, 9, 27, 11, 0) }
+      { start: new Date(2018, 8, 14, 10, 0), end: new Date(2018, 8, 14, 21, 0) },
+      { start: new Date(2018, 8, 26, 16, 0), end: new Date(2018, 8, 26, 18, 0) },
+      { start: new Date(2018, 8, 26, 23, 0), end: new Date(2018, 8, 27, 11, 0) }
+    ],
+    [{ start: new Date(2018, 9, 14, 10, 0), end: new Date(2018, 9, 14, 21, 0) }],
+    [{ start: new Date(2018, 9, 26, 23, 0), end: new Date(2018, 9, 27, 11, 0) }],
+    [
+      { start: new Date(2018, 10, 14, 10, 0), end: new Date(2018, 10, 14, 21, 0) },
+      { start: new Date(2018, 10, 26, 23, 0), end: new Date(2018, 10, 27, 11, 0) }
+    ],
+    [
+      { start: new Date(2018, 11, 25, 10, 0), end: new Date(2018, 11, 26, 11, 0) },
+      { start: new Date(2018, 11, 26, 23, 0), end: new Date(2018, 11, 27, 11, 0) }
     ],
     []
   ];
