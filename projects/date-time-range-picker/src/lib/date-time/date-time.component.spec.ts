@@ -72,10 +72,28 @@ describe('DateTimeComponent', () => {
     expect(monthElement.length).toBe(1);
   });
 
-  it('should not show a time by default', () => {
-    const monthElement = fixture.debugElement.queryAll(By.css('ngx-time'));
+  it('should not show a time selection by default', () => {
+    const timeElement = fixture.debugElement.queryAll(By.css('ngx-time'));
 
-    expect(monthElement.length).toBe(0);
+    expect(timeElement.length).toBe(0);
+  });
+
+  it('should show the time if there is a preselection', () => {
+    component.selectedDate = new Date(2020, 1, 1, 13, 0);
+    const timeElement = fixture.debugElement.query(By.css('#timePicker'));
+
+    expect(timeElement.nativeElement.value).not.toBe('...');
+  });
+
+  it('should not show the time if there is no preselection', () => {
+    component.selectedDate = null;
+    component.timeSelected = false;
+
+    fixture.detectChanges();
+    component.ngOnInit();
+    const timeElement = fixture.debugElement.query(By.css('#timePicker'));
+
+    expect(timeElement.nativeElement.value).toBe('...');
   });
 
   it('should show a time when the user clicks the input', () => {

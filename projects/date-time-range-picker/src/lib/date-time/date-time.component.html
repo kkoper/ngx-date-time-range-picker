@@ -7,8 +7,8 @@
     </div>
 
     <div class="input-container time-container">
-        <input type="text" id="timePicker" (click)='toggleTimePicker()' value="{{(timeSelected && (activeMoment | date:'shortTime')) || '...' }}" [disabled]='!dateSelected || isDisabled'
-            [class.focused]='showTimePicker'>
+        <input type="text" id="timePicker" (click)='toggleTimePicker()' value="{{(timeSelected && (activeMoment | date:'shortTime')) || '...' }}"
+            [disabled]='!dateSelected || isDisabled' [class.focused]='showTimePicker'>
         <ngx-time *ngIf='showTimePicker' [unavailabilities]='timeUnavailabilities' [selectedDate]='selectedDate' (timeSelected)='onTimeSelected($event)'></ngx-time>
     </div>
 </div>
