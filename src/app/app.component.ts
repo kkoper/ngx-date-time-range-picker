@@ -9,8 +9,8 @@ import { Observable, of } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'Date time range picker';
-  defaultStartDate = new Date(2019, 0, 1);
-  defaultEndDate = new Date(2019, 0, 1);
+  defaultStartDate = new Date(2019, 0, 1, 10, 30);
+  defaultEndDate = new Date(2019, 0, 1, 18, 0);
 
   startDate: Date;
   endDate: Date;
