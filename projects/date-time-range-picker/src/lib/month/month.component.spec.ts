@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import * as moment_ from 'moment';
 import { DayComponent } from '../day/day.component';
 import { DateTimeRange } from '../models/date-time-range';
+import { DTRPTranslationService } from '../translation.service';
 import { MonthComponent } from './month.component';
 
 const moment = moment_;
@@ -17,7 +18,8 @@ fdescribe('MonthComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [],
-      declarations: [MonthComponent, DayComponent]
+      declarations: [MonthComponent, DayComponent],
+      providers: [DTRPTranslationService]
     })
       .overrideComponent(MonthComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default }

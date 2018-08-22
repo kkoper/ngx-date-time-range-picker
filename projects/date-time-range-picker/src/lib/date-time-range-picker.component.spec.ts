@@ -7,6 +7,7 @@ import { DateTimeComponent } from './date-time/date-time.component';
 import { DayComponent } from './day/day.component';
 import { MonthComponent } from './month/month.component';
 import { TimeComponent } from './time/time.component';
+import { DTRPTranslationService } from './translation.service';
 const moment = moment_;
 
 describe('DateTimeRangePickerComponent', () => {
@@ -16,6 +17,7 @@ describe('DateTimeRangePickerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
+      providers: [DTRPTranslationService],
       declarations: [
         DateTimeComponent,
         MonthComponent,
