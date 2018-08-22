@@ -25,8 +25,6 @@ export class DateTimeRangePickerComponent implements OnInit {
   endMonthUnavailability: DateTimeRange[];
   openStart = false;
   openEnd = false;
-  disabledStart = false;
-  disabledEnd = true;
 
   private startOfBlockEveryting: Date;
   constructor() {}
@@ -42,26 +40,39 @@ export class DateTimeRangePickerComponent implements OnInit {
 
   onDateTimeFromSelected(date: Date) {
     this.selectedStart = date;
-    const firstPossibleEndDate = moment(date)
-      .add(30, 'minutes')
-      .toDate();
-    this.selectedEnd = firstPossibleEndDate;
+    this.openStart = false;
 
-    this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
-    this.evaluateEndMonthUnavailability(firstPossibleEndDate);
+    this.evaluateEndMonthUnavailability(
+      moment(date)
+        .add(1, 'minute')
+        .toDate()
+    );
+    if (this.selectedEnd) {
+      if (this.selectedStart < this.selectedEnd) {
+        this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
+      } else {
+        this.selectedEnd = null;
+        this.openEnd = true;
+      }
+    } else {
+      this.openEnd = true;
+    }
   }
 
   onDateTimeUntilSelected(date: Date) {
     this.selectedEnd = date;
     this.openEnd = false;
-    this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
-  }
 
-  onAdvanceFlow(): void {
-    this.disabledEnd = false;
-    this.openEnd = true;
-    this.openStart = false;
-    this.startOfBlockEveryting = null;
+    if (this.selectedStart) {
+      if (this.selectedStart < this.selectedEnd) {
+        this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
+      } else {
+        this.selectedStart = null;
+        this.openStart = true;
+      }
+    } else {
+      this.openStart = true;
+    }
   }
 
   onStartMonthChanged(date: Date) {

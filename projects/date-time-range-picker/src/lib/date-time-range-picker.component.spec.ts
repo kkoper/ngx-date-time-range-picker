@@ -47,10 +47,11 @@ describe('DateTimeRangePickerComponent', () => {
   });
 
   describe('flow', () => {
-    it('should open the end time component when the startDateTime has been picked', () => {
+    it('should open the end time component when the startDateTime has been picked and there is no end time selected', () => {
       expect(component.openEnd).toBe(false);
 
-      component.onAdvanceFlow();
+      const startDate = new Date(2019, 1, 1, 1, 30);
+      component.onDateTimeFromSelected(startDate);
 
       expect(component.openEnd).toBe(true);
     });
@@ -62,11 +63,10 @@ describe('DateTimeRangePickerComponent', () => {
     });
   });
 
-  it('should emit when the start date has been updated', () => {
+  it('should emit when the start date has been updated and there is a valid end date selected', () => {
     const startDate = new Date(2019, 1, 1, 1, 30);
     const endDate = new Date(2019, 1, 1, 2, 30);
-    const updatedStartDate = new Date(2019, 1, 1, 4, 30);
-    const updatedEndDate = new Date(2019, 1, 1, 5);
+    const updatedStartDate = new Date(2019, 1, 1, 1, 0);
 
     const emitionSpy = spyOn(component.dateTimeRangeSelected, 'emit');
 
@@ -81,11 +81,36 @@ describe('DateTimeRangePickerComponent', () => {
     component.onDateTimeFromSelected(updatedStartDate);
     expect(component.dateTimeRangeSelected.emit).toHaveBeenCalledWith({
       start: updatedStartDate,
-      end: updatedEndDate
+      end: endDate
     });
   });
 
-  it('should emit when the end date has been updated', () => {
+  it('should not emit when the start date has been updated and the end date is before start date', () => {
+    const startDate = new Date(2019, 1, 1, 1, 30);
+    const endDate = new Date(2019, 1, 1, 2, 30);
+    const updatedStartDate = new Date(2019, 1, 1, 5, 0);
+
+    spyOn(component.dateTimeRangeSelected, 'emit');
+
+    component.onDateTimeFromSelected(startDate);
+    component.onDateTimeUntilSelected(endDate);
+
+    component.onDateTimeFromSelected(updatedStartDate);
+    expect(component.dateTimeRangeSelected.emit).not.toHaveBeenCalledWith();
+    expect(component.selectedEnd).toBeNull();
+  });
+
+  it('should not emit when the start date has been selected and there is no end date', () => {
+    const startDate = new Date(2019, 1, 1, 1, 30);
+
+    spyOn(component.dateTimeRangeSelected, 'emit');
+
+    component.onDateTimeFromSelected(startDate);
+
+    expect(component.dateTimeRangeSelected.emit).not.toHaveBeenCalledWith();
+  });
+
+  it('should emit when the end date has been updated and there is a start date', () => {
     const startDate = new Date(2019, 1, 1, 1, 30);
     const endDate = new Date(2019, 1, 1, 2, 30);
     const updatedEndDate = new Date(2019, 1, 1, 5);
@@ -105,6 +130,32 @@ describe('DateTimeRangePickerComponent', () => {
       start: startDate,
       end: updatedEndDate
     });
+  });
+
+  it('should not emit when the end date has been updated but the start date is after the end date', () => {
+    const startDate = new Date(2019, 1, 1, 1, 30);
+    const endDate = new Date(2019, 1, 1, 2, 30);
+    const updatedEndDate = new Date(2019, 1, 1, 1);
+
+    spyOn(component.dateTimeRangeSelected, 'emit');
+
+    component.onDateTimeFromSelected(startDate);
+    component.onDateTimeUntilSelected(endDate);
+
+    component.onDateTimeUntilSelected(updatedEndDate);
+    expect(component.dateTimeRangeSelected.emit).not.toHaveBeenCalledWith();
+    expect(component.selectedStart).toBeNull();
+  });
+
+  it('should not emit when the end date has been selected but there is no start date', () => {
+    const endDate = new Date(2019, 1, 1, 2, 30);
+    component.selectedStart = null;
+    spyOn(component.dateTimeRangeSelected, 'emit');
+
+    component.onDateTimeUntilSelected(endDate);
+
+    expect(component.dateTimeRangeSelected.emit).not.toHaveBeenCalledWith();
+    expect(component.selectedStart).toBeNull();
   });
 
   it('should update the start month availability when the start month is changed', () => {
