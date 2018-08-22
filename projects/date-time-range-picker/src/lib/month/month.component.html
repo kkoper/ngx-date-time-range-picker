@@ -6,22 +6,26 @@
 
     <div class="month-header">
       <span class="button button-previous-month" (click)="goToPreviousMonth()">
-        <svg width="6" height="10" viewBox="0 0 10 16"><path d="M.328 8.792l6.88 6.88a1.12 1.12 0 1 0 1.584-1.585L2.705 8l6.087-6.087A1.12 1.12 0 0 0 7.208.328l-6.88 6.88a1.117 1.117 0 0 0 0 1.584z" fill="#62696C" fill-rule="nonzero"/></svg>
+        <svg width="6" height="10" viewBox="0 0 10 16">
+          <path d="M.328 8.792l6.88 6.88a1.12 1.12 0 1 0 1.584-1.585L2.705 8l6.087-6.087A1.12 1.12 0 0 0 7.208.328l-6.88 6.88a1.117 1.117 0 0 0 0 1.584z"
+            fill="#62696C" fill-rule="nonzero" /></svg>
       </span>
-      <div class="month-name">{{monthName}}</div>
+      <div class="month-name">{{translationService.getTranslation(monthName)}}</div>
       <span class="button button-next-month" (click)="goToNextMonth()">
-        <svg width="6" height="10" viewBox="0 0 10 16"><path d="M8.792 8.792l-6.88 6.88a1.12 1.12 0 1 1-1.584-1.585L6.416 8 .328 1.913A1.12 1.12 0 0 1 1.913.328l6.88 6.88a1.117 1.117 0 0 1 0 1.584z" fill="#62696C" fill-rule="nonzero"/></svg>
+        <svg width="6" height="10" viewBox="0 0 10 16">
+          <path d="M8.792 8.792l-6.88 6.88a1.12 1.12 0 1 1-1.584-1.585L6.416 8 .328 1.913A1.12 1.12 0 0 1 1.913.328l6.88 6.88a1.117 1.117 0 0 1 0 1.584z"
+            fill="#62696C" fill-rule="nonzero" /></svg>
       </span>
     </div>
 
     <div class="week-header">
-      <span class="day-header">M</span>
-      <span class="day-header">T</span>
-      <span class="day-header">W</span>
-      <span class="day-header">T</span>
-      <span class="day-header">F</span>
-      <span class="day-header">S</span>
-      <span class="day-header">S</span>
+      <span class="day-header">{{translationService.getTranslation('monday').substring(0, 1)}}</span>
+      <span class="day-header">{{translationService.getTranslation('tuesday').substring(0, 1)}}</span>
+      <span class="day-header">{{translationService.getTranslation('wednesday').substring(0, 1)}}</span>
+      <span class="day-header">{{translationService.getTranslation('thursday').substring(0, 1)}}</span>
+      <span class="day-header">{{translationService.getTranslation('friday').substring(0, 1)}}</span>
+      <span class="day-header">{{translationService.getTranslation('saturday').substring(0, 1)}}</span>
+      <span class="day-header">{{translationService.getTranslation('sunday').substring(0, 1)}}</span>
     </div>
   </div>
 
@@ -32,7 +36,7 @@
   </div>
 
   <div class="legend-container">
-    <div class="legend legend-unavailable">unavailable</div>
-    <div class="legend legend-partial">partially available</div>
+    <div class="legend legend-unavailable">{{translationService.getTranslation('unavailable')}}</div>
+    <div class="legend legend-partial">{{translationService.getTranslation('partially_available')}}</div>
   </div>
 </div>

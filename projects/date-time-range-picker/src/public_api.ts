@@ -10,3 +10,4 @@ export * from './lib/models/date-time-range';
 export * from './lib/models/day-state';
 export * from './lib/month/month.component';
 export * from './lib/time/time.component';
+export * from './lib/translation.service';

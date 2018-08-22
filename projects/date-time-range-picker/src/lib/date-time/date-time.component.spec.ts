@@ -7,6 +7,7 @@ import { DayComponent } from '../day/day.component';
 import { DateTimeRange } from '../models/date-time-range';
 import { MonthComponent } from '../month/month.component';
 import { TimeComponent } from '../time/time.component';
+import { DTRPTranslationService } from '../translation.service';
 import { DateTimeComponent } from './date-time.component';
 const moment = moment_;
 
@@ -17,6 +18,7 @@ describe('DateTimeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
+      providers: [DTRPTranslationService],
       declarations: [DateTimeComponent, MonthComponent, DayComponent, TimeComponent]
     })
       .overrideComponent(DateTimeComponent, {
