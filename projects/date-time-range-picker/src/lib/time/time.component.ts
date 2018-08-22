@@ -45,15 +45,11 @@ export class TimeComponent implements OnInit, OnChanges {
     this.applyUnavailabilities();
   }
 
-  compareFn(t1: TimeSegment, t2: TimeSegment): boolean {
-    return (
-      t1 && t2 && t1.hour === t2.hour && t1.minute === t2.minute && !t1.isBlocked && !t2.isBlocked
-    );
-  }
-
   onTimeSelected(value: TimeSegment): void {
-    this.selectedTimeOption = value;
-    this.timeSelected.emit({ hours: value.hour, minutes: value.minute });
+    if (!value.isBlocked) {
+      this.selectedTimeOption = value;
+      this.timeSelected.emit({ hours: value.hour, minutes: value.minute });
+    }
   }
 
   private applyUnavailabilities(): void {
