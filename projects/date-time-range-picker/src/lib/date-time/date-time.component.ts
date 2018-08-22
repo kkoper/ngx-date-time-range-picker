@@ -159,7 +159,7 @@ export class DateTimeComponent implements OnInit, OnChanges {
     }
     if (selectedDay.isSame(this.startFrom, 'day')) {
       const startMoment = moment(this.startFrom).startOf('day');
-      const endMoment = moment(this.startFrom).add(30, 'minutes');
+      const endMoment = moment(this.startFrom).add(1, 'minutes');
       newTimeUnavailabilities.push({ start: startMoment.toDate(), end: endMoment.toDate() });
     }
 
