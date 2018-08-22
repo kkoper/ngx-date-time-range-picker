@@ -11,6 +11,7 @@ import {
 import * as moment_ from 'moment';
 import { DateTimeRange } from '../models/date-time-range';
 import { DayState } from '../models/day-state';
+import { DTRPTranslationService } from '../translation.service';
 
 const moment = moment_;
 
@@ -49,7 +50,7 @@ export class MonthComponent implements OnInit, OnChanges {
     return this.activeMoment.year();
   }
 
-  constructor() {}
+  constructor(public translationService: DTRPTranslationService) {}
 
   ngOnChanges() {
     this.assessAvailabilityPerDay();

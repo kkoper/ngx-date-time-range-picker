@@ -3,6 +3,7 @@ import * as moment_ from 'moment';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DateTimeRange } from './models/date-time-range';
+import { DTRPTranslationService } from './translation.service';
 const moment = moment_;
 
 @Component({
@@ -27,7 +28,7 @@ export class DateTimeRangePickerComponent implements OnInit {
   openEnd = false;
 
   private startOfBlockEveryting: Date;
-  constructor() {}
+  constructor(public translationService: DTRPTranslationService) {}
 
   ngOnInit() {
     this.getMonthUnavailability(this.selectedStart || moment().toDate())
