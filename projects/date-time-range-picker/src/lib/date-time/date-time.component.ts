@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewEncapsulation
@@ -19,7 +20,7 @@ const moment = moment_;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class DateTimeComponent implements OnInit {
+export class DateTimeComponent implements OnInit, OnChanges {
   @Input()
   monthUnavailabilities: DateTimeRange[] = [];
   @Input()
@@ -30,18 +31,18 @@ export class DateTimeComponent implements OnInit {
   isDisabled: boolean;
   @Input()
   set isOpen(value: boolean) {
-    this.showDatePicker = value;
+    this.isDatePickerShown = value;
   }
   @Output()
   monthChanged = new EventEmitter<Date>();
   @Output()
   dateTimeSelected = new EventEmitter<Date>();
-  @Output()
-  advanceFlow = new EventEmitter<void>();
 
   activeMoment: moment_.Moment;
-  showDatePicker: boolean;
-  showTimePicker: boolean;
+
+  isDatePickerShown: boolean;
+  isTimePickerShown: boolean;
+
   dateSelected: boolean;
   timeSelected: boolean;
 
@@ -51,20 +52,26 @@ export class DateTimeComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (this.selectedDate) {
-      this.activeMoment = moment(this.selectedDate);
-      this.timeSelected = true;
-    }
+    this.setupSelectDateTime();
+  }
+
+  ngOnChanges() {
+    this.setupSelectDateTime();
   }
 
   onDayMonthSelected(selectedDate: Date): void {
     this.calcuateTimeUnavailabilities(selectedDate);
     this.activeMoment = moment(selectedDate);
     this.selectedDate = selectedDate;
-    this.dateTimeSelected.emit(this.selectedDate);
+
     this.dateSelected = true;
-    this.showDatePicker = false;
-    this.showTimePicker = true;
+    this.hideDatePicker();
+
+    if (this.timeSelected) {
+      this.dateTimeSelected.emit(this.selectedDate);
+    } else {
+      this.showTimePicker();
+    }
   }
 
   onTimeSelected(selectedTime: Time): void {
@@ -76,10 +83,8 @@ export class DateTimeComponent implements OnInit {
     this.selectedDate = this.activeMoment.toDate();
     this.dateTimeSelected.emit(this.selectedDate);
 
-    this.showTimePicker = false;
+    this.hideTimePicker();
     this.timeSelected = true;
-
-    this.advanceFlow.emit();
   }
 
   onMonthChanged(date: Date): void {
@@ -88,11 +93,45 @@ export class DateTimeComponent implements OnInit {
   }
 
   toggleDatePicker(): void {
-    this.showDatePicker = !this.showDatePicker;
+    this.isDatePickerShown = !this.isDatePickerShown;
+    if (this.isDatePickerShown) {
+      this.hideTimePicker();
+    }
   }
 
   toggleTimePicker(): void {
-    this.showTimePicker = !this.showTimePicker;
+    this.isTimePickerShown = !this.isTimePickerShown;
+    if (this.isTimePickerShown) {
+      this.hideDatePicker();
+    }
+  }
+
+  private setupSelectDateTime() {
+    if (this.selectedDate) {
+      this.activeMoment = moment(this.selectedDate);
+      this.dateSelected = true;
+      this.timeSelected = true;
+    } else {
+      this.activeMoment = null;
+      this.dateSelected = false;
+      this.timeSelected = false;
+    }
+  }
+
+  private hideTimePicker(): void {
+    this.isTimePickerShown = false;
+  }
+
+  private hideDatePicker(): void {
+    this.isDatePickerShown = false;
+  }
+
+  private showTimePicker(): void {
+    this.isTimePickerShown = true;
+  }
+
+  private showDatePicker(): void {
+    this.isDatePickerShown = true;
   }
 
   private calcuateTimeUnavailabilities(date: Date): void {
@@ -115,7 +154,7 @@ export class DateTimeComponent implements OnInit {
 
     if (selectedDay.isSame(now, 'day')) {
       const startMoment = moment().startOf('day');
-      const endMoment = moment().add(30, 'minutes');
+      const endMoment = moment().add(1, 'minutes');
       newTimeUnavailabilities.push({ start: startMoment.toDate(), end: endMoment.toDate() });
     }
     if (selectedDay.isSame(this.startFrom, 'day')) {

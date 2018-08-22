@@ -108,14 +108,14 @@ describe('DateTimeComponent', () => {
   });
 
   it('should show a time when the user selects the date', () => {
-    component.showTimePicker = false;
+    component.isTimePickerShown = false;
     component.onDayMonthSelected(
       moment()
         .date(28)
         .toDate()
     );
 
-    expect(component.showTimePicker).toBe(true);
+    expect(component.isTimePickerShown).toBe(true);
   });
 
   it('should give time unavailabilities when a day-month is picked', () => {
@@ -193,19 +193,5 @@ describe('DateTimeComponent', () => {
         .startOf('minute')
         .toDate()
     );
-  });
-
-  it('should emit an advance flow when a time is picked', () => {
-    spyOn(component.advanceFlow, 'emit').and.callThrough();
-
-    component.onDayMonthSelected(
-      moment()
-        .date(26)
-        .startOf('minute')
-        .toDate()
-    );
-    component.onTimeSelected({ hours: 20, minutes: 10 });
-
-    expect(component.advanceFlow.emit).toHaveBeenCalled();
   });
 });
