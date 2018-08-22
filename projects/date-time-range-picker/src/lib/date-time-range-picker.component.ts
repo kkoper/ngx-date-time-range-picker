@@ -42,6 +42,11 @@ export class DateTimeRangePickerComponent implements OnInit {
     this.selectedStart = date;
     this.openStart = false;
 
+    this.evaluateEndMonthUnavailability(
+      moment(date)
+        .add(1, 'minute')
+        .toDate()
+    );
     if (this.selectedEnd) {
       if (this.selectedStart < this.selectedEnd) {
         this.dateTimeRangeSelected.emit({ start: this.selectedStart, end: this.selectedEnd });
