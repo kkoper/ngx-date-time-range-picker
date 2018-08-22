@@ -109,6 +109,7 @@ describe('DateTimeComponent', () => {
 
   it('should show a time when the user selects the date', () => {
     component.isTimePickerShown = false;
+    component.timeSelected = false;
     component.onDayMonthSelected(
       moment()
         .date(28)
