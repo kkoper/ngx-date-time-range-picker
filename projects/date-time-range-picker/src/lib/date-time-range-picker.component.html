@@ -4,13 +4,13 @@
             From:
         </span>
         <ngx-date-time [monthUnavailabilities]='startMonthUnavailability' [selectedDate]='selectedStart' (monthChanged)='onStartMonthChanged($event)'
-          (dateTimeSelected)='onDateTimeFromSelected($event)' (advanceFlow)='onAdvanceFlow()' [isOpen]='openStart' [isDisabled]='disabledStart'></ngx-date-time>
+            (dateTimeSelected)='onDateTimeFromSelected($event)' (advanceFlow)='onAdvanceFlow()' [isOpen]='openStart'></ngx-date-time>
     </div>
     <div class="input-holder to">
         <span class="input-label">
             Until:
         </span>
         <ngx-date-time [monthUnavailabilities]='endMonthUnavailability' [selectedDate]='selectedEnd' [startFrom]='selectedStart'
-            (monthChanged)='onEndMonthChanged($event)' (dateTimeSelected)='onDateTimeUntilSelected($event)' [isOpen]='openEnd' [isDisabled]='disabledEnd'></ngx-date-time>
+            (monthChanged)='onEndMonthChanged($event)' (dateTimeSelected)='onDateTimeUntilSelected($event)' [isOpen]='openEnd'></ngx-date-time>
     </div>
 </div>
