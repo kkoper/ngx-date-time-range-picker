@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
     [
       { start: new Date(2018, 7, 14, 10, 0), end: new Date(2018, 7, 14, 21, 0) },
       { start: new Date(2018, 7, 16, 10, 0), end: new Date(2018, 7, 18, 18, 0) }
+      { start: new Date(2018, 7, 26, 23, 0), end: new Date(2018, 7, 27, 11, 0) }
     ],
     [
       { start: new Date(2018, 8, 14, 10, 0), end: new Date(2018, 8, 14, 21, 0) },
