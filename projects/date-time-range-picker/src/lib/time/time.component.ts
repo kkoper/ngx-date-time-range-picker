@@ -60,7 +60,10 @@ export class TimeComponent implements OnInit, OnChanges, AfterViewInit {
   private scrollToSelectedTime(): void {
     if (document) {
       let el: any;
-      if (this.selectedTimeOption) {
+      if (
+        this.selectedTimeOption &&
+        (this.selectedTimeOption.minute === 0 || this.selectedTimeOption.minute === 30)
+      ) {
         el = document.getElementById(
           `${this.selectedTimeOption.hour}:${this.selectedTimeOption.minute}`
         );
