@@ -1,5 +1,6 @@
 import { Time } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -21,7 +22,7 @@ const moment = moment_;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class TimeComponent implements OnInit, OnChanges {
+export class TimeComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   unavailabilities: DateTimeRange[];
   @Input()
@@ -45,10 +46,33 @@ export class TimeComponent implements OnInit, OnChanges {
     this.applyUnavailabilities();
   }
 
+  ngAfterViewInit() {
+    this.scrollToSelectedTime();
+  }
+
   onTimeSelected(value: TimeSegment): void {
     if (!value.isBlocked) {
       this.selectedTimeOption = value;
       this.timeSelected.emit({ hours: value.hour, minutes: value.minute });
+    }
+  }
+
+  private scrollToSelectedTime(): void {
+    if (document) {
+      let el: any;
+      if (
+        this.selectedTimeOption &&
+        (this.selectedTimeOption.minute === 0 || this.selectedTimeOption.minute === 30)
+      ) {
+        el = document.getElementById(
+          `${this.selectedTimeOption.hour}:${this.selectedTimeOption.minute}`
+        );
+      } else {
+        el = document.getElementById('13:30');
+      }
+      if (el && el.scrollIntoView) {
+        el.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'nearest' });
+      }
     }
   }
 
