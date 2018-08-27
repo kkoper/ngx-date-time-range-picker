@@ -50,6 +50,16 @@ fdescribe('MonthComponent', () => {
     });
   });
 
+  it('should automatically start from the previously selected date', () => {
+    spyOn(component.monthChanged, 'emit');
+    component.selectedDate = null;
+    component.hoverFrom = new Date(2019, 1, 13);
+
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(component.monthChanged.emit).toHaveBeenCalledWith(new Date(2019, 1, 13));
+  });
+
   it('should show the correct month and year', () => {
     component.ngOnInit();
     fixture.detectChanges();
