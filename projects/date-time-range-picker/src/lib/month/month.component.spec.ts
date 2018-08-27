@@ -144,7 +144,7 @@ fdescribe('MonthComponent', () => {
     const monthToUse = 6;
     const yearToUse = 2020;
     const unavailabilityToUse: DateTimeRange[] = [
-      { start: new Date(2020, 6, 1, 14, 0), end: new Date(2020, 6, 10, 21, 0) }
+      { start: new Date(2020, 6, 10, 14, 0), end: new Date(2020, 7, 11, 21, 0) }
     ];
     component.selectedDate = new Date(yearToUse, monthToUse, 1);
     component.unavailability = unavailabilityToUse;
@@ -152,7 +152,7 @@ fdescribe('MonthComponent', () => {
 
     const daysUnavailable = fixture.debugElement.queryAll(By.css('.unavailable'));
 
-    expect(daysUnavailable.length).toBe(8);
+    expect(daysUnavailable.length).toBe(21);
   });
 
   it('should know when a day is selected', () => {
