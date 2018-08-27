@@ -59,9 +59,17 @@ describe('DateTimeRangePickerComponent', () => {
     });
 
     it('should close the end time component when the endDateTime has been picked', () => {
-      component.onDateTimeUntilSelected(new Date(2019, 1, 1, 1, 30));
+      component.startOpened();
 
+      expect(component.openStart).toBe(true);
       expect(component.openEnd).toBe(false);
+    });
+
+    it('should close the start date-time-picker when the end date-time-picker is opened', () => {
+      component.endOpened();
+
+      expect(component.openStart).toBe(false);
+      expect(component.openEnd).toBe(true);
     });
   });
 

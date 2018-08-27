@@ -30,13 +30,23 @@ export class DateTimeComponent implements OnInit, OnChanges {
   @Input()
   isDisabled: boolean;
   @Input()
-  set isOpen(value: boolean) {
-    this.isDatePickerShown = value;
+  set isOpen(shouldBeOpen: boolean) {
+    if (shouldBeOpen) {
+      if (!this.isTimePickerShown) {
+        this.showDatePicker();
+      }
+    } else {
+      this.hideDatePicker();
+      this.hideTimePicker();
+    }
   }
+
   @Output()
   monthChanged = new EventEmitter<Date>();
   @Output()
   dateTimeSelected = new EventEmitter<Date>();
+  @Output()
+  opened = new EventEmitter<void>();
 
   activeMoment: moment_.Moment;
 
@@ -93,14 +103,14 @@ export class DateTimeComponent implements OnInit, OnChanges {
   }
 
   toggleDatePicker(): void {
-    this.isDatePickerShown = !this.isDatePickerShown;
+    this.isDatePickerShown ? this.hideDatePicker() : this.showDatePicker();
     if (this.isDatePickerShown) {
       this.hideTimePicker();
     }
   }
 
   toggleTimePicker(): void {
-    this.isTimePickerShown = !this.isTimePickerShown;
+    this.isTimePickerShown ? this.hideTimePicker() : this.showTimePicker();
     if (this.isTimePickerShown) {
       this.hideDatePicker();
     }
@@ -127,10 +137,12 @@ export class DateTimeComponent implements OnInit, OnChanges {
   }
 
   private showTimePicker(): void {
+    this.opened.emit();
     this.isTimePickerShown = true;
   }
 
   private showDatePicker(): void {
+    this.opened.emit();
     this.isDatePickerShown = true;
   }
 

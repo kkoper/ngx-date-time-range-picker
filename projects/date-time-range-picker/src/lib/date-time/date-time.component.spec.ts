@@ -44,6 +44,33 @@ describe('DateTimeComponent', () => {
     expect(monthElement.length).toBe(0);
   });
 
+  it('should show a month if the parent component says so and the timePicker is not opened', () => {
+    component.isOpen = true;
+    component.isTimePickerShown = false;
+    fixture.detectChanges();
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
+    expect(monthElement.length).toBe(1);
+  });
+
+  it('should not show a month if the parent component says so and the timePicker is opened', () => {
+    component.isTimePickerShown = true;
+    component.isOpen = true;
+    fixture.detectChanges();
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
+    expect(monthElement.length).toBe(0);
+    const timeElement = fixture.debugElement.queryAll(By.css('ngx-time'));
+    expect(timeElement.length).toBe(1);
+  });
+
+  it('should hide all elements if the parent component says so', () => {
+    component.isOpen = false;
+    fixture.detectChanges();
+    const monthElement = fixture.debugElement.queryAll(By.css('ngx-month'));
+    expect(monthElement.length).toBe(0);
+    const timeElement = fixture.debugElement.queryAll(By.css('ngx-time'));
+    expect(timeElement.length).toBe(0);
+  });
+
   it('should show a month if the parent component says so', () => {
     component.isOpen = true;
     fixture.detectChanges();

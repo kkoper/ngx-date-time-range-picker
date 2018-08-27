@@ -59,6 +59,12 @@ export class MonthComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.activeMoment = moment(this.selectedDate || undefined);
+    if (this.hoverFrom) {
+      if (!this.selectedDate) {
+        this.activeMoment = moment(this.hoverFrom);
+        this.monthChanged.emit(this.hoverFrom);
+      }
+    }
     this.assessAvailabilityPerDay();
     this.setupMonth();
   }

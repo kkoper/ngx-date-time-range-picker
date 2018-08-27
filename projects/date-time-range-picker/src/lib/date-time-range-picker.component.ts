@@ -88,6 +88,16 @@ export class DateTimeRangePickerComponent implements OnInit {
     this.evaluateEndMonthUnavailability(date);
   }
 
+  startOpened(): void {
+    this.openStart = true;
+    this.openEnd = false;
+  }
+
+  endOpened(): void {
+    this.openStart = false;
+    this.openEnd = true;
+  }
+
   private evaluateEndMonthUnavailability(date: Date) {
     this.getMonthUnavailability(date)
       .pipe(take(1))
