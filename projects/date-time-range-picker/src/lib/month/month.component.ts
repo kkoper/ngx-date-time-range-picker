@@ -195,7 +195,12 @@ export class MonthComponent implements OnInit, OnChanges {
       } else {
         this.partialDays.push(endFullDayNumber);
       }
-      this.addFullDays(startFullDayNumber + 1, endFullDayNumber);
+      if (moment(block.start).isBefore(moment(block.end), 'month')) {
+        this.markRestOfTheDaysAsFull(startFullDayNumber);
+        break;
+      } else {
+        this.addFullDays(startFullDayNumber + 1, endFullDayNumber);
+      }
       previousEndDate = moment(block.end);
 
       if (this.hoverFrom && block.start > this.hoverFrom) {
