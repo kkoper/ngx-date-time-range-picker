@@ -39,6 +39,25 @@ describe('TimeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should make times unavailable based on alwaysUnavailableTimes', () => {
+    const optionThatShouldNotYetBeBlocked = component
+      .timeOptions
+      .filter(timeoption => timeoption.hour === 12 && timeoption.minute === 30)[0];
+
+    component.unavailableTimes.next([{
+      hour:12,
+      minute: 30,
+      isBlocked: true
+    }]);
+
+    const optionThatShouldBeBlocked = component
+      .timeOptions
+      .filter(timeoption => timeoption.hour === 12 && timeoption.minute === 30)[0];
+
+    expect(optionThatShouldNotYetBeBlocked.isBlocked).toBe(false);
+    expect(optionThatShouldBeBlocked.isBlocked).toBe(true);
+  });
+
   it('should show all options in a day', () => {
     const options = fixture.debugElement.queryAll(By.css('li.time-list-item'));
 
