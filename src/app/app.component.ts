@@ -65,7 +65,6 @@ export class AppComponent implements OnInit {
   };
 
   public onGetUnavailableTimesForDate(date: Date): Observable<TimeSegment[]>{
-    console.log(moment(date).isoWeekday());
     if(moment(date).isoWeekday() === 7){
       return of([
         {

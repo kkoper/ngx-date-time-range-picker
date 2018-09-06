@@ -207,6 +207,31 @@ describe('DateTimeComponent', () => {
     component.onTimeSelected({ hours: 20, minutes: 10 });
   });
 
+  it('should emit blocked times to time component when date changes', (done)=>{
+    const testDate = new Date(2017, 10, 10, 12, 30);
+    let calledOnce: boolean = false;
+
+    component.getUnavailableTimesForDate = (date: Date) => {
+      return of([{
+        hour: date.getHours(),
+        minute: date.getMinutes(),
+        isBlocked: true
+      }]);
+    };
+
+    component.unavailableTimesForDay.subscribe((times) => {
+      if(calledOnce) {
+        expect(times[0].hour).toBe(12);
+        expect(times[0].minute).toBe(30);
+        done();
+      }else{
+        calledOnce = true;
+      }
+    });
+
+    component.onDayMonthSelected(testDate);
+  });
+
   it('should emit a date-time when a date is picked', done => {
     spyOn(component.dateTimeSelected, 'emit').and.callThrough();
     component.dateTimeSelected.subscribe((selectedDate: Date) => {
