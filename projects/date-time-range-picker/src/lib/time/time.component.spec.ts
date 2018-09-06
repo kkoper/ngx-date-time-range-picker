@@ -4,6 +4,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { TimeComponent } from './time.component';
+import {TimeSegment} from "../models/time-segment";
+import {Subject} from "rxjs";
 
 describe('TimeComponent', () => {
   let component: TimeComponent;
@@ -23,6 +25,7 @@ describe('TimeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TimeComponent);
     component = fixture.componentInstance;
+    component.unavailableTimes = new Subject<TimeSegment[]>();
     component.selectedDate = new Date(2018, 6, 26);
     component.unavailabilities = [
       { start: new Date(2018, 6, 25, 10, 0), end: new Date(2018, 6, 26, 11, 0) },

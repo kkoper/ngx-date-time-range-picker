@@ -9,6 +9,7 @@ import { MonthComponent } from '../month/month.component';
 import { TimeComponent } from '../time/time.component';
 import { DTRPTranslationService } from '../translation.service';
 import { DateTimeComponent } from './date-time.component';
+import {of} from "rxjs";
 const moment = moment_;
 
 describe('DateTimeComponent', () => {
@@ -30,6 +31,7 @@ describe('DateTimeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DateTimeComponent);
     component = fixture.componentInstance;
+    component.getUnavailableTimesForDate = () => of([]);
     component.selectedDate = new Date(2020, 1, 1);
     fixture.detectChanges();
   });
