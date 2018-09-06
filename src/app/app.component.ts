@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DateTimeRange } from 'projects/date-time-range-picker/src/public_api';
 import { Observable, of } from 'rxjs';
 import * as moment from "moment";
-import {TimeSegment} from "../../projects/date-time-range-picker/src/lib/models/time-segment";
+import { TimeSegment } from "projects/date-time-range-picker/src/public_api";
 
 @Component({
   selector: 'app-root',
